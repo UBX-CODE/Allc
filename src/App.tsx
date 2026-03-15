@@ -1140,75 +1140,16 @@ export default function App() {
     }
   };
 
-  if (showDashboard) {
-    return (
-      <div className="min-h-screen bg-brand-bg font-sans text-brand-dark selection:bg-brand-orange/20 selection:text-brand-orange">
-        <Navbar 
-          onBook={() => setShowBooking(true)} 
-          onDashboard={() => setShowDashboard(true)}
-          user={user} 
-          onAuth={() => setShowAuth(true)} 
-          onSignOut={handleSignOut} 
-        />
-        <Dashboard onBack={() => setShowDashboard(false)} />
-        <Footer />
-        <AnimatePresence>
-          {showAuth && <Auth onClose={() => setShowAuth(false)} onSuccess={() => setShowAuth(false)} />}
-        </AnimatePresence>
-      </div>
-    );
-  }
+  const pageVariants = {
+    initial: { opacity: 0, y: 10 },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -10 },
+  };
 
-  if (showBooking) {
-    return (
-      <div className="min-h-screen bg-brand-bg font-sans text-brand-dark selection:bg-brand-orange/20 selection:text-brand-orange">
-        <Navbar 
-          onBook={() => setShowBooking(true)} 
-          onDashboard={() => setShowDashboard(true)}
-          user={user} 
-          onAuth={() => setShowAuth(true)} 
-          onSignOut={handleSignOut} 
-        />
-        <Booking onBack={() => setShowBooking(false)} />
-        <Footer />
-        <AnimatePresence>
-          {showAuth && <Auth onClose={() => setShowAuth(false)} onSuccess={() => setShowAuth(false)} />}
-        </AnimatePresence>
-      </div>
-    );
-  }
-
-  if (showDoctorProfile) {
-    return (
-      <div className="min-h-screen bg-brand-bg font-sans text-brand-dark selection:bg-brand-orange/20 selection:text-brand-orange">
-        <Navbar 
-          onBook={() => setShowBooking(true)} 
-          onDashboard={() => setShowDashboard(true)}
-          user={user} 
-          onAuth={() => setShowAuth(true)} 
-          onSignOut={handleSignOut} 
-        />
-        <DoctorProfile 
-          onBack={() => setShowDoctorProfile(false)} 
-          onBook={() => {
-            setShowDoctorProfile(false);
-            setShowBooking(true);
-          }}
-          onViewServices={() => {
-            setShowDoctorProfile(false);
-            // Scroll to services after a small delay to allow re-render
-            setTimeout(() => {
-              document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
-            }, 100);
-          }}
-        />
-        <Footer />
-        <AnimatePresence>
-          {showAuth && <Auth onClose={() => setShowAuth(false)} onSuccess={() => setShowAuth(false)} />}
-        </AnimatePresence>
-      </div>
-    );
-  }
+  const pageTransition = {
+    duration: 0.6,
+    ease: [0.43, 0.13, 0.23, 0.96] // Custom cubic-bezier for smooth motion
+  };
 
   return (
     <div className="min-h-screen bg-brand-bg font-sans text-brand-dark selection:bg-brand-orange/20 selection:text-brand-orange">
@@ -1219,23 +1160,86 @@ export default function App() {
         onAuth={() => setShowAuth(true)} 
         onSignOut={handleSignOut} 
       />
-      <main>
-        <Hero 
-          onBook={() => setShowBooking(true)} 
-          onViewServices={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
-        />
-        <About 
-          onBook={() => setShowBooking(true)} 
-          onKnowMore={() => setShowDoctorProfile(true)}
-        />
-        <WhyChoose />
-        <Services onBook={() => setShowBooking(true)} />
-        <Pricing onBook={() => setShowBooking(true)} />
-        <Testimonials />
-        <FAQ />
-        <AppointmentCTA onBook={() => setShowBooking(true)} />
-      </main>
-      <Footer />
+      
+      <AnimatePresence mode="wait">
+        {showDashboard ? (
+          <motion.div
+            key="dashboard"
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}
+          >
+            <Dashboard onBack={() => setShowDashboard(false)} />
+            <Footer />
+          </motion.div>
+        ) : showBooking ? (
+          <motion.div
+            key="booking"
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}
+          >
+            <Booking onBack={() => setShowBooking(false)} />
+            <Footer />
+          </motion.div>
+        ) : showDoctorProfile ? (
+          <motion.div
+            key="profile"
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}
+          >
+            <DoctorProfile 
+              onBack={() => setShowDoctorProfile(false)} 
+              onBook={() => {
+                setShowDoctorProfile(false);
+                setShowBooking(true);
+              }}
+              onViewServices={() => {
+                setShowDoctorProfile(false);
+                setTimeout(() => {
+                  document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+              }}
+            />
+            <Footer />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="landing"
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}
+          >
+            <main>
+              <Hero 
+                onBook={() => setShowBooking(true)} 
+                onViewServices={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+              />
+              <About 
+                onBook={() => setShowBooking(true)} 
+                onKnowMore={() => setShowDoctorProfile(true)}
+              />
+              <WhyChoose />
+              <Services onBook={() => setShowBooking(true)} />
+              <Pricing onBook={() => setShowBooking(true)} />
+              <Testimonials />
+              <FAQ />
+              <AppointmentCTA onBook={() => setShowBooking(true)} />
+            </main>
+            <Footer />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <AnimatePresence>
         {showAuth && <Auth onClose={() => setShowAuth(false)} onSuccess={() => setShowAuth(false)} />}
       </AnimatePresence>
