@@ -125,13 +125,16 @@ const Booking: React.FC<BookingProps> = ({ onBack }) => {
         {/* Left Sidebar */}
         <div className="lg:w-1/3 bg-brand-dark p-12 text-white flex flex-col justify-between relative overflow-hidden">
           <div className="relative z-10">
-            <button 
+            <motion.button 
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              whileHover={{ x: -5 }}
               onClick={onBack}
               className="mb-12 flex items-center gap-2 text-white/60 hover:text-white transition-colors text-sm font-bold"
             >
               <ChevronLeft size={18} />
               Back to Home
-            </button>
+            </motion.button>
             <h1 className="text-5xl font-bold leading-tight tracking-tight mb-6">
               Schedule <br />
               <span className="text-brand-orange italic font-light">a Tour</span>
@@ -146,7 +149,7 @@ const Booking: React.FC<BookingProps> = ({ onBack }) => {
               <div className="relative w-full h-full">
                 <motion.div 
                   animate={{ rotate: 360 }}
-                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                  transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
                   className="absolute inset-0 border-2 border-dashed border-white/20 rounded-full"
                 />
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -174,9 +177,14 @@ const Booking: React.FC<BookingProps> = ({ onBack }) => {
           <div className="space-y-6">
             <h3 className="text-sm font-bold uppercase tracking-widest text-brand-dark">Select Service</h3>
             <div className="grid sm:grid-cols-2 gap-4">
-              {services.map((s) => (
-                <button
+              {services.map((s, idx) => (
+                <motion.button
                   key={s.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 + (idx * 0.2), duration: 1.0 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   onClick={() => setSelectedService(s)}
                   className={`
                     p-4 rounded-2xl border text-left transition-all flex flex-col gap-1
@@ -189,7 +197,7 @@ const Booking: React.FC<BookingProps> = ({ onBack }) => {
                   <span className={`text-sm font-bold ${selectedService.id === s.id ? 'text-white' : 'text-brand-orange'}`}>
                     Rs. {s.price.toLocaleString()}
                   </span>
-                </button>
+                </motion.button>
               ))}
             </div>
           </div>
@@ -211,8 +219,10 @@ const Booking: React.FC<BookingProps> = ({ onBack }) => {
               {dates.map((d, i) => {
                 const isSelected = selectedDate === d.date;
                 return (
-                  <button
+                  <motion.button
                     key={i}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                     onClick={() => setSelectedDate(d.date)}
                     className={`
                       flex-shrink-0 w-20 py-4 rounded-2xl border transition-all flex flex-col items-center gap-1
@@ -224,7 +234,7 @@ const Booking: React.FC<BookingProps> = ({ onBack }) => {
                     <span className="text-[10px] uppercase font-bold tracking-widest">{d.month}</span>
                     <span className="text-xl font-bold">{d.date}</span>
                     <span className="text-[10px] font-medium">{d.day}</span>
-                  </button>
+                  </motion.button>
                 );
               })}
             </div>
@@ -238,9 +248,11 @@ const Booking: React.FC<BookingProps> = ({ onBack }) => {
                 const isSelected = selectedTime === time;
                 const isBooked = i === 5 || i === 12; // Just for visual variety
                 return (
-                  <button
+                  <motion.button
                     key={time}
                     disabled={isBooked}
+                    whileHover={!isBooked ? { scale: 1.05 } : {}}
+                    whileTap={!isBooked ? { scale: 0.95 } : {}}
                     onClick={() => setSelectedTime(time)}
                     className={`
                       py-3 rounded-xl text-xs font-bold transition-all border
@@ -251,7 +263,7 @@ const Booking: React.FC<BookingProps> = ({ onBack }) => {
                     `}
                   >
                     {time}
-                  </button>
+                  </motion.button>
                 );
               })}
             </div>
@@ -317,7 +329,9 @@ const Booking: React.FC<BookingProps> = ({ onBack }) => {
           )}
 
           {/* Submit Button */}
-          <button 
+          <motion.button 
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             onClick={handleBooking}
             disabled={loading}
             className="w-full bg-brand-orange text-white py-5 rounded-2xl font-bold flex items-center justify-center gap-3 hover:bg-brand-dark transition-all shadow-xl shadow-brand-orange/20 group disabled:opacity-50"
@@ -329,11 +343,11 @@ const Booking: React.FC<BookingProps> = ({ onBack }) => {
               </span>
             ) : (
               <>
-                <CreditCard size={20} />
+                <CreditCard size={20} className="group-hover:scale-110 transition-transform" />
                 Pay & Confirm Appointment
               </>
             )}
-          </button>
+          </motion.button>
 
           <p className="text-center text-[10px] text-gray-400 font-medium">
             Secure payment powered by Stripe. Your data is protected.

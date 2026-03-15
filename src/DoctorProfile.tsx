@@ -25,7 +25,10 @@ const DoctorProfile: React.FC<DoctorProfileProps> = ({ onBack, onBook, onViewSer
     <div className="min-h-screen bg-[#FFFDF9] pt-32 pb-20 px-6 lg:px-12">
       <div className="max-w-7xl mx-auto">
         {/* Back Button */}
-        <button 
+        <motion.button 
+          initial={{ opacity: 0, x: -8 }}
+          animate={{ opacity: 1, x: 0 }}
+          whileHover={{ x: -5 }}
           onClick={onBack}
           className="mb-12 flex items-center gap-2 text-gray-400 hover:text-brand-dark transition-colors text-sm font-bold group"
         >
@@ -33,7 +36,7 @@ const DoctorProfile: React.FC<DoctorProfileProps> = ({ onBack, onBook, onViewSer
             <ChevronLeft size={18} />
           </div>
           Back to Home
-        </button>
+        </motion.button>
 
         <div className="grid lg:grid-cols-[1fr_1.5fr] gap-20 items-start">
           {/* Left Column: Image & Quick Info */}
@@ -41,6 +44,7 @@ const DoctorProfile: React.FC<DoctorProfileProps> = ({ onBack, onBook, onViewSer
             <motion.div 
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1, ease: "easeOut" }}
               className="relative"
             >
               <div className="aspect-square md:aspect-[4/5] rounded-full md:rounded-[48px] overflow-hidden shadow-2xl border-4 md:border-8 border-white w-56 h-56 md:w-[480px] md:h-auto mx-auto">
@@ -68,25 +72,39 @@ const DoctorProfile: React.FC<DoctorProfileProps> = ({ onBack, onBook, onViewSer
                   </span>
                 ))}
               </div>
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <button 
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="flex flex-col sm:flex-row gap-4 pt-4"
+              >
+                <motion.button 
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={onBook}
-                  className="bg-brand-dark text-white px-8 py-4 rounded-full font-bold flex items-center justify-center gap-2 hover:bg-brand-orange transition-all hover:scale-105"
+                  className="bg-brand-dark text-white px-8 py-4 rounded-full font-bold flex items-center justify-center gap-2 hover:bg-brand-orange transition-all shadow-lg shadow-brand-dark/10"
                 >
                   Book Appointment
                   <ArrowUpRight size={20} />
-                </button>
-                <button 
+                </motion.button>
+                <motion.button 
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={onViewServices}
-                  className="bg-white text-brand-dark px-8 py-4 rounded-full font-bold border border-brand-dark/10 hover:bg-gray-50 transition-all"
+                  className="bg-white text-brand-dark px-8 py-4 rounded-full font-bold border border-brand-dark/10 hover:bg-gray-50 transition-all shadow-sm"
                 >
                   View Services
-                </button>
-              </div>
+                </motion.button>
+              </motion.div>
             </div>
 
             {/* Qualifications Card */}
-            <div className="bg-white p-8 rounded-[40px] border border-brand-dark/5 shadow-sm">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="bg-white p-8 rounded-[40px] border border-brand-dark/5 shadow-sm"
+            >
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 bg-brand-orange/10 rounded-xl flex items-center justify-center text-brand-orange">
                   <GraduationCap size={20} />
@@ -98,17 +116,23 @@ const DoctorProfile: React.FC<DoctorProfileProps> = ({ onBack, onBook, onViewSer
                   "MBBS",
                   "Diploma in Obstetrics & Gynaecology (D.G.O)",
                   "Postgraduate Diploma in Lifestyle Medicine (PGDLM), CMC Vellore",
-                  "Certificate in Nutrition & Fitness, INFS",
-                  "Certificate in Exercise Science, INFS",
-                  "Certificate in Pregnancy & Postpartum Nutrition, INFS"
+                  "Indian Society of Lifestyle Medicine (ISLM) Certified Physician",
+                  "Board Certified Lifestyle Medicine Professional (IBLM)",
+                  "FOGSI Member"
                 ].map((item, i) => (
-                  <li key={i} className="flex gap-3 text-sm text-gray-500 leading-relaxed">
-                    <span className="text-brand-orange font-bold">•</span>
+                  <motion.li 
+                    key={i}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.5 + (i * 0.2), duration: 1.0 }}
+                    className="flex gap-3 text-sm text-gray-500 leading-relaxed items-start"
+                  >
+                    <div className="w-1.5 h-1.5 bg-brand-orange rounded-full mt-1.5 shrink-0" />
                     {item}
-                  </li>
+                  </motion.li>
                 ))}
               </ul>
-            </div>
+            </motion.div>
           </div>
 
           {/* Right Column: Detailed Content */}

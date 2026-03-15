@@ -84,13 +84,16 @@ const Dashboard: React.FC<DashboardProps> = ({ onBack }) => {
         
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>
-            <button 
+            <motion.button 
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              whileHover={{ x: -5 }}
               onClick={onBack}
               className="mb-6 flex items-center gap-2 text-brand-dark/40 hover:text-brand-dark transition-colors text-sm font-bold"
             >
               <ChevronLeft size={18} />
               Back to Home
-            </button>
+            </motion.button>
             <h1 className="text-5xl font-bold text-brand-dark tracking-tight">
               Your <span className="text-brand-orange italic font-light">Wellness</span> Dashboard
             </h1>
@@ -98,8 +101,10 @@ const Dashboard: React.FC<DashboardProps> = ({ onBack }) => {
 
           <div className="flex items-center gap-4 bg-white p-2 rounded-2xl border border-brand-dark/5 shadow-sm">
             {(['all', 'upcoming', 'past'] as const).map((f) => (
-              <button
+              <motion.button
                 key={f}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => setFilter(f)}
                 className={`
                   px-6 py-2 rounded-xl text-xs font-bold capitalize transition-all
@@ -109,7 +114,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onBack }) => {
                 `}
               >
                 {f}
-              </button>
+              </motion.button>
             ))}
           </div>
         </div>
@@ -129,12 +134,14 @@ const Dashboard: React.FC<DashboardProps> = ({ onBack }) => {
             <p className="text-brand-dark/40 max-w-xs mx-auto mb-8">
               Start your journey towards a healthier life by booking your first consultation.
             </p>
-            <button 
+            <motion.button 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={onBack}
-              className="bg-brand-dark text-white px-8 py-4 rounded-full font-bold hover:bg-brand-orange transition-all"
+              className="bg-brand-dark text-white px-8 py-4 rounded-full font-bold hover:bg-brand-orange transition-all shadow-lg shadow-brand-dark/10"
             >
               Book Now
-            </button>
+            </motion.button>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -145,7 +152,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onBack }) => {
                   layout
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
+                  transition={{ delay: i * 0.2, duration: 1.0 }}
                   className="bg-white rounded-[32px] p-8 border border-brand-dark/5 shadow-sm hover:shadow-xl hover:shadow-brand-dark/5 transition-all group"
                 >
                   <div className="flex justify-between items-start mb-6">
@@ -182,9 +189,12 @@ const Dashboard: React.FC<DashboardProps> = ({ onBack }) => {
                     <span className="text-[10px] font-bold text-brand-dark/20 uppercase tracking-widest">
                       ID: {apt.id.slice(0, 8)}
                     </span>
-                    <button className="text-brand-dark/40 hover:text-brand-dark transition-colors">
+                    <motion.button 
+                      whileHover={{ x: 3 }}
+                      className="text-brand-dark/40 hover:text-brand-dark transition-colors"
+                    >
                       <ArrowRight size={18} />
-                    </button>
+                    </motion.button>
                   </div>
                 </motion.div>
               ))}

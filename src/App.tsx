@@ -71,20 +71,23 @@ const Navbar = ({ onBook, user, onAuth, onSignOut, onDashboard }: { onBook: () =
           {/* Desktop Menu */}
           <div className="hidden lg:flex items-center space-x-8">
             {navLinks.map((link) => (
-              <a
+              <motion.a
                 key={link.name}
                 href={link.href}
+                whileHover={{ y: -2 }}
                 className="text-sm font-semibold text-brand-dark/70 hover:text-brand-dark transition-colors"
               >
                 {link.name}
-              </a>
+              </motion.a>
             ))}
           </div>
 
           <div className="hidden lg:flex items-center gap-3">
             {user ? (
               <div className="relative">
-                <button 
+                <motion.button 
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={() => setShowUserMenu(!showUserMenu)}
                   className="w-10 h-10 bg-brand-orange/10 rounded-full flex items-center justify-center text-brand-orange border border-brand-orange/20 overflow-hidden"
                 >
@@ -93,20 +96,22 @@ const Navbar = ({ onBook, user, onAuth, onSignOut, onDashboard }: { onBook: () =
                   ) : (
                     <UserIcon size={20} />
                   )}
-                </button>
+                </motion.button>
                 <AnimatePresence>
                   {showUserMenu && (
                     <motion.div 
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      className="absolute right-0 mt-4 w-64 bg-white rounded-3xl p-6 shadow-2xl border border-gray-100"
+                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                      transition={{ type: "spring", damping: 20, stiffness: 300 }}
+                      className="absolute right-0 mt-4 w-64 bg-white rounded-3xl p-6 shadow-2xl border border-gray-100 ring-1 ring-black/5"
                     >
-                      <div className="mb-6 pb-6 border-b border-gray-50">
+                      <div className="mb-6 pb-6 border-b border-gray-50 text-left">
                         <p className="font-bold text-brand-dark truncate">{user.displayName || 'User'}</p>
                         <p className="text-xs text-gray-400 truncate">{user.email}</p>
                       </div>
-                      <button 
+                      <motion.button 
+                        whileHover={{ x: 5 }}
                         onClick={() => {
                           onDashboard();
                           setShowUserMenu(false);
@@ -115,8 +120,9 @@ const Navbar = ({ onBook, user, onAuth, onSignOut, onDashboard }: { onBook: () =
                       >
                         <Activity size={18} />
                         My Appointments
-                      </button>
-                      <button 
+                      </motion.button>
+                      <motion.button 
+                        whileHover={{ x: 5 }}
                         onClick={() => {
                           onSignOut();
                           setShowUserMenu(false);
@@ -125,22 +131,28 @@ const Navbar = ({ onBook, user, onAuth, onSignOut, onDashboard }: { onBook: () =
                       >
                         <LogOut size={18} />
                         Sign Out
-                      </button>
+                      </motion.button>
                     </motion.div>
                   )}
                 </AnimatePresence>
               </div>
             ) : (
-              <button 
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={onAuth}
-                className="bg-transparent border border-brand-dark text-brand-dark px-8 py-2.5 rounded-full text-sm font-bold hover:bg-brand-dark hover:text-white transition-all"
+                className="bg-transparent border border-brand-dark text-brand-dark px-8 py-2.5 rounded-full text-sm font-bold hover:bg-brand-dark hover:text-white transition-all shadow-sm"
               >
                 Sign In
-              </button>
+              </motion.button>
             )}
-            <div className="w-10 h-10 border border-brand-dark rounded-full flex items-center justify-center text-brand-dark hover:bg-brand-dark hover:text-white cursor-pointer transition-all">
+            <motion.div 
+              whileHover={{ scale: 1.1, rotate: 10 }}
+              whileTap={{ scale: 0.9 }}
+              className="w-10 h-10 border border-brand-dark rounded-full flex items-center justify-center text-brand-dark hover:bg-brand-dark hover:text-white cursor-pointer transition-all shadow-sm"
+            >
               <Mail size={18} />
-            </div>
+            </motion.div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -156,28 +168,32 @@ const Navbar = ({ onBook, user, onAuth, onSignOut, onDashboard }: { onBook: () =
       <AnimatePresence>
         {isOpen && (
           <motion.div 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="lg:hidden absolute top-24 left-6 right-6 bg-white rounded-3xl p-8 shadow-2xl space-y-6"
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            transition={{ type: "spring", damping: 25, stiffness: 400 }}
+            className="lg:hidden absolute top-24 left-6 right-6 bg-white rounded-[32px] p-8 shadow-2xl space-y-6 border border-gray-100"
           >
             {navLinks.map((link) => (
-              <a
+              <motion.a
                 key={link.name}
                 href={link.href}
-                className="block text-lg font-semibold text-brand-dark hover:text-brand-orange"
+                whileTap={{ x: 5 }}
+                className="block text-xl font-bold text-brand-dark hover:text-brand-orange transition-colors"
                 onClick={() => setIsOpen(false)}
               >
                 {link.name}
-              </a>
+              </motion.a>
             ))}
-            <button 
+            <motion.button 
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               onClick={onBook}
-              className="w-full bg-brand-orange text-white px-6 py-4 rounded-full text-lg font-bold flex items-center justify-center gap-2"
+              className="w-full bg-brand-orange text-white px-6 py-4 rounded-2xl text-lg font-bold flex items-center justify-center gap-2 shadow-lg shadow-brand-orange/20"
             >
               Book Appointment
               <ArrowUpRight size={20} />
-            </button>
+            </motion.button>
           </motion.div>
         )}
       </AnimatePresence>
@@ -259,6 +275,7 @@ const Hero = ({ onBook, onViewServices }: { onBook: () => void, onViewServices: 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.5, ease: "easeOut" }}
               className="inline-flex items-center gap-2 px-4 py-2 bg-brand-orange/10 rounded-full text-brand-orange text-[10px] lg:text-xs font-bold tracking-widest uppercase"
             >
               <span className="w-2 h-2 bg-brand-orange rounded-full animate-pulse"></span>
@@ -267,8 +284,9 @@ const Hero = ({ onBook, onViewServices }: { onBook: () => void, onViewServices: 
 
             <div className="relative">
               <motion.h1 
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1.8, ease: "easeOut" }}
                 className="text-5xl sm:text-7xl lg:text-[84px] font-serif text-brand-dark leading-[1.1] lg:leading-[1] tracking-tight"
               >
                 Transform your <br className="lg:hidden" />
@@ -280,6 +298,7 @@ const Hero = ({ onBook, onViewServices }: { onBook: () => void, onViewServices: 
               <motion.div 
                 initial={{ scale: 0, rotate: -20 }}
                 animate={{ scale: 1, rotate: 12 }}
+                transition={{ duration: 1.5, type: "spring", bounce: 0.3 }}
                 className="lg:hidden absolute -top-6 -right-4 w-14 h-14 bg-[#F4FF99] rounded-full flex flex-col items-center justify-center text-brand-dark shadow-xl border-2 border-white z-10"
               >
                 <span className="text-xs font-bold leading-tight">15+</span>
@@ -290,7 +309,7 @@ const Hero = ({ onBook, onViewServices }: { onBook: () => void, onViewServices: 
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
+              transition={{ delay: 0.2, duration: 1.5, ease: "easeOut" }}
               className="text-base lg:text-lg text-gray-500 max-w-xl mx-auto leading-relaxed px-4 lg:px-0"
             >
               Personalised, Clinical, Evidence Based Wellness For Long Term Vitality. Join us on a journey to optimal health.
@@ -299,21 +318,25 @@ const Hero = ({ onBook, onViewServices }: { onBook: () => void, onViewServices: 
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
+              transition={{ delay: 0.3, duration: 1.0 }}
               className="flex flex-col sm:flex-row items-center justify-center gap-4 px-6 lg:px-0"
             >
-              <button 
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={onBook}
-                className="w-full sm:w-auto bg-brand-dark text-white px-10 py-4 lg:py-4 rounded-full font-bold flex items-center justify-center gap-2 hover:bg-brand-orange transition-all active:scale-95"
+                className="w-full sm:w-auto bg-brand-dark text-white px-10 py-4 lg:py-4 rounded-full font-bold flex items-center justify-center gap-2 hover:bg-brand-orange transition-all shadow-lg shadow-brand-dark/10"
               >
                 Book Appointment
                 <ArrowUpRight size={20} />
-              </button>
-              <button 
+              </motion.button>
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={onViewServices}    
-                className="w-full sm:w-auto bg-white text-brand-dark px-10 py-4 lg:py-4 rounded-full font-bold border border-brand-dark/10 hover:bg-gray-50 transition-all active:scale-95">
+                className="w-full sm:w-auto bg-white text-brand-dark px-10 py-4 lg:py-4 rounded-full font-bold border border-brand-dark/10 hover:bg-gray-50 transition-all shadow-sm active:scale-95">
                 Explore Services
-              </button>
+              </motion.button>
             </motion.div>
           </div>
 
@@ -364,6 +387,7 @@ const About = ({ onBook, onKnowMore }: { onBook: () => void, onKnowMore: () => v
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
             viewport={{ once: true }}
             className="relative"
           >
@@ -450,19 +474,23 @@ const About = ({ onBook, onKnowMore }: { onBook: () => void, onKnowMore: () => v
               She follows an evidence-based, systematic, and scientific approach to the curative and preventive aspects of lifestyle diseases. She has been supporting and guiding people in reversing lifestyle diseases, optimizing metabolic and hormonal wellness, and embracing healthy habits that safeguard their future.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mb-10 px-4 lg:px-0">
-              <button 
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={onBook}
-                className="w-full sm:w-auto bg-brand-dark text-white px-8 py-4 rounded-full font-bold flex items-center justify-center gap-2 hover:bg-brand-orange transition-all active:scale-95"
+                className="w-full sm:w-auto bg-brand-dark text-white px-8 py-4 rounded-full font-bold flex items-center justify-center gap-2 hover:bg-brand-orange transition-all shadow-lg shadow-brand-dark/10"
               >
                 Book Appointment
                 <ArrowUpRight size={20} />
-              </button>
-              <button 
+              </motion.button>
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={onKnowMore}
-                className="w-full sm:w-auto border border-gray-200 text-brand-dark px-8 py-4 rounded-full font-bold hover:bg-gray-50 transition-all active:scale-95"
+                className="w-full sm:w-auto border border-gray-200 text-brand-dark px-8 py-4 rounded-full font-bold hover:bg-gray-50 transition-all shadow-sm"
               >
                 Get to Know More
-              </button>
+              </motion.button>
             </div>
           </motion.div>
         </div>
@@ -519,26 +547,47 @@ const WhyChoose = () => {
                 Our goal is to shape lives that are not just longer, but disease-free, drug-free, jubilant, and full of vitality and vigour.
               </p>
             </div>
-            <button className="bg-brand-dark text-white px-8 py-4 rounded-full font-bold flex items-center gap-2 hover:bg-brand-orange transition-colors">
+            <motion.button 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-brand-dark text-white px-8 py-4 rounded-full font-bold flex items-center gap-2 hover:bg-brand-orange transition-all shadow-lg shadow-brand-dark/10"
+            >
               Start Your Journey
               <ArrowUpRight size={20} />
-            </button>
+            </motion.button>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0.3,
+                  duration: 1.2
+                }
+              }
+            }}
             className="grid sm:grid-cols-2 gap-6"
           >
             {points.map((point, i) => (
-              <div key={i} className="bg-white p-6 md:p-8 rounded-3xl md:rounded-[32px] shadow-sm border border-brand-dark/5 hover:shadow-md transition-shadow">
-                <div className="w-12 h-12 bg-brand-orange/10 rounded-2xl flex items-center justify-center text-brand-orange mb-6">
+              <motion.div 
+                key={i} 
+                variants={{
+                  hidden: { opacity: 0, scale: 0.9 },
+                  visible: { opacity: 1, scale: 1 }
+                }}
+                className="bg-white p-6 md:p-8 rounded-3xl md:rounded-[32px] shadow-sm border border-brand-dark/5 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group"
+              >
+                <div className="w-12 h-12 bg-brand-orange/10 rounded-2xl flex items-center justify-center text-brand-orange mb-6 group-hover:bg-brand-orange group-hover:text-white transition-colors duration-300">
                   {point.icon}
                 </div>
-                <h4 className="text-xl font-bold text-brand-dark mb-3">{point.title}</h4>
+                <h4 className="text-xl font-bold text-brand-dark mb-3 leading-tight">{point.title}</h4>
                 <p className="text-sm text-gray-500 leading-relaxed">{point.desc}</p>
-              </div>
+              </motion.div>
             ))}
           </motion.div>
         </div>
@@ -556,15 +605,19 @@ const AppointmentCTA = ({ onBook }: { onBook: () => void }) => {
         <h2 className="text-4xl md:text-7xl font-bold text-white mb-12 leading-tight">
           For Appointment <span className="italic font-light">Booking</span>
         </h2>
-        <button 
+        <motion.button 
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           onClick={onBook}
-          className="bg-white text-brand-dark px-1 py-1 rounded-full flex items-center gap-6 pr-1 mx-auto hover:scale-105 transition-transform"
+          className="bg-white text-brand-dark px-1 py-1 rounded-full flex items-center gap-6 pr-1 mx-auto shadow-2xl shadow-brand-orange/20"
         >
           <span className="pl-6 md:pl-8 font-bold text-base md:text-lg">Book Appointment Now</span>
           <div className="bg-brand-orange p-4 rounded-full text-white">
             <ArrowUpRight size={32} />
           </div>
-        </button>
+        </motion.button>
       </div>
     </section>
   );
@@ -618,39 +671,47 @@ const Services = ({ onBook }: { onBook: () => void }) => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-          {services.map((service, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="bg-white rounded-3xl md:rounded-[40px] p-6 pt-12 md:p-10 md:pt-16 relative text-left shadow-sm hover:shadow-xl transition-all group border border-brand-dark/5"
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.3,
+                duration: 1.2
+              }
+            }
+          }}
+          className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20 px-4 md:px-0"
+        >
+          {services.map((service, i) => (
+            <motion.div 
+              key={i}
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 }
+              }}
+              className="bg-white p-10 rounded-[40px] shadow-sm border border-brand-dark/5 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group flex flex-col items-center text-center"
             >
-              {/* Floating Icon */}
-              <div className={`absolute -top-6 left-10 w-16 h-16 rounded-3xl ${service.lightColor} flex items-center justify-center p-1`}>
-                <div className={`w-full h-full rounded-2xl ${service.color} flex items-center justify-center text-white shadow-lg`}>
-                  {service.icon}
-                </div>
+              <div className={`w-14 h-14 ${service.color} text-white rounded-2xl flex items-center justify-center mb-8 shadow-lg group-hover:scale-110 transition-transform duration-500`}>
+                {service.icon}
               </div>
-
               <h3 className="text-2xl font-bold text-brand-dark mb-4 leading-tight">{service.title}</h3>
-              <p className="text-gray-500 text-sm mb-8 leading-relaxed">{service.desc}</p>
-              
-              <button className="flex items-center gap-2 text-sm font-bold text-brand-orange hover:gap-3 transition-all">
-                Read more
-                <ArrowRight size={16} />
-              </button>
+              <p className="text-gray-500 text-sm leading-relaxed">{service.desc}</p>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         <motion.button 
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           onClick={onBook}
-          className="bg-brand-orange text-white px-10 py-4 rounded-2xl font-bold flex items-center gap-3 mx-auto hover:bg-brand-dark transition-all shadow-lg shadow-brand-orange/20"
+          className="bg-brand-orange text-white px-10 py-4 rounded-2xl font-bold flex items-center gap-3 mx-auto transition-all shadow-lg shadow-brand-orange/20"
         >
           Hire Us Today
           <ArrowRight size={20} />
@@ -756,13 +817,15 @@ const Pricing = ({ onBook }: { onBook: () => void }) => {
                   </div>
                 )}
               </div>
-              <button 
+              <motion.button 
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={onBook}
-                className="mt-8 w-full bg-brand-dark text-white py-4 rounded-full font-bold hover:bg-brand-orange transition-all flex items-center justify-center gap-2 group"
+                className="mt-8 w-full bg-brand-dark text-white py-4 rounded-full font-bold hover:bg-brand-orange transition-all flex items-center justify-center gap-2 group shadow-lg shadow-brand-dark/10"
               >
                 Book Consultation
                 <ArrowUpRight size={18} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </button>
+              </motion.button>
             </motion.div>
           ))}
         </div>
@@ -771,8 +834,9 @@ const Pricing = ({ onBook }: { onBook: () => void }) => {
         <div className="grid lg:grid-cols-2 gap-8 mb-12">
           {/* Long Term Wellness */}
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
             className="bg-brand-dark rounded-[40px] p-10 text-white"
           >
             <div className="flex items-center gap-4 mb-8">
@@ -798,18 +862,21 @@ const Pricing = ({ onBook }: { onBook: () => void }) => {
                 </div>
               ))}
             </div>
-            <button 
+            <motion.button 
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               onClick={onBook}
-              className="mt-8 w-full bg-brand-orange text-white py-4 rounded-full font-bold hover:bg-white hover:text-brand-dark transition-all"
+              className="mt-8 w-full bg-brand-orange text-white py-4 rounded-full font-bold hover:bg-white hover:text-brand-dark transition-all shadow-lg shadow-brand-orange/20"
             >
               Get Started
-            </button>
+            </motion.button>
           </motion.div>
 
           {/* Couple Consultation */}
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
             className="bg-brand-bg rounded-[40px] p-10 border border-brand-dark/5"
           >
             <div className="flex items-center gap-4 mb-8">
@@ -830,12 +897,14 @@ const Pricing = ({ onBook }: { onBook: () => void }) => {
                 </div>
               ))}
             </div>
-            <button 
+            <motion.button 
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               onClick={onBook}
-              className="mt-8 w-full bg-brand-dark text-white py-4 rounded-full font-bold hover:bg-brand-orange transition-all"
+              className="mt-8 w-full bg-brand-dark text-white py-4 rounded-full font-bold hover:bg-brand-orange transition-all shadow-lg shadow-brand-dark/10"
             >
               Book Couple Plan
-            </button>
+            </motion.button>
           </motion.div>
         </div>
 
@@ -865,7 +934,7 @@ const Pricing = ({ onBook }: { onBook: () => void }) => {
               key={idx}
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ delay: idx * 0.1 }}
+              transition={{ delay: idx * 0.3, duration: 1.2, ease: "easeOut" }}
               className="bg-white p-8 rounded-[32px] border border-brand-dark/5 shadow-sm hover:shadow-md transition-all text-center"
             >
               <div className="w-12 h-12 bg-brand-bg rounded-2xl flex items-center justify-center text-brand-dark mx-auto mb-6">
@@ -918,6 +987,7 @@ const TestimonialCard: React.FC<{ item: any }> = ({ item }) => {
     <motion.div
       initial={{ opacity: 0, scale: 0.9 }}
       whileInView={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 1.2, ease: "easeOut" }}
       viewport={{ once: true }}
       className="bg-white p-6 md:p-8 rounded-3xl md:rounded-[32px] text-left shadow-sm border border-gray-100 flex flex-col h-full"
     >
@@ -972,15 +1042,38 @@ const Testimonials = () => {
   ];
 
   return (
-    <section id="testimonials" className="py-24 bg-brand-bg">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 text-center">
-        <h2 className="text-4xl md:text-6xl font-bold text-brand-dark mb-16">Success Stories</h2>
+    <section id="testimonials" className="py-24 bg-brand-bg relative overflow-hidden">
+      <div className="absolute top-1/2 left-0 w-[30%] h-[30%] bg-brand-orange/5 blur-[100px] rounded-full -translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
+      
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 text-center relative z-10">
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-4xl md:text-6xl font-bold text-brand-dark mb-16"
+        >
+          Success Stories
+        </motion.h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.15
+              }
+            }
+          }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-6"
+        >
           {testimonials.map((item, index) => (
             <TestimonialCard key={index} item={item} />
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -1002,28 +1095,62 @@ const FAQ = () => {
   return (
     <section id="faq" className="py-24 bg-brand-bg">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-20">
-        <div>
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+        >
           <h2 className="text-4xl md:text-7xl font-bold text-brand-dark mb-8 leading-tight">Everything You<br />Need to Know</h2>
           <p className="text-gray-500 mb-12 max-w-sm">Find quick answers to the most frequently asked questions about our services.</p>
-          <button className="bg-brand-orange text-white px-1 py-1 rounded-full flex items-center gap-4 pr-1 hover:scale-105 transition-transform">
+          <motion.button 
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="bg-brand-orange text-white px-1 py-1 rounded-full flex items-center gap-4 pr-1 shadow-lg shadow-brand-orange/20"
+          >
             <span className="pl-6 font-bold">See all questions</span>
             <div className="bg-white p-3 rounded-full text-brand-orange">
               <ArrowUpRight size={24} />
             </div>
-          </button>
-        </div>
+          </motion.button>
+        </motion.div>
 
-        <div className="space-y-4">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.1
+              }
+            }
+          }}
+          className="space-y-4"
+        >
           {faqs.map((faq, i) => (
-            <div key={i} className="border-b border-gray-200">
+            <motion.div 
+              key={i} 
+              variants={{
+                hidden: { opacity: 0, y: 10 },
+                visible: { opacity: 1, y: 0 }
+              }}
+              className="border-b border-gray-200"
+            >
               <button 
                 onClick={() => setOpenIndex(openIndex === i ? -1 : i)}
-                className="w-full py-6 flex justify-between items-center text-left group"
+                className="w-full py-6 flex justify-between items-center text-left group transition-all"
               >
                 <span className={`text-xl md:text-2xl font-medium transition-colors ${openIndex === i ? 'text-brand-dark' : 'text-gray-600 group-hover:text-brand-dark'}`}>
                   {faq.q}
                 </span>
-                {openIndex === i ? <Minus size={24} /> : <Plus size={24} />}
+                <motion.div
+                  animate={{ rotate: openIndex === i ? 180 : 0 }}
+                  className="text-brand-orange"
+                >
+                  {openIndex === i ? <Minus size={24} /> : <Plus size={24} />}
+                </motion.div>
               </button>
               <AnimatePresence>
                 {openIndex === i && (
@@ -1031,15 +1158,16 @@ const FAQ = () => {
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
                     className="overflow-hidden"
                   >
-                    <p className="pb-6 text-gray-500 leading-relaxed">{faq.a}</p>
+                    <p className="pb-6 text-gray-500 leading-relaxed text-base md:text-lg">{faq.a}</p>
                   </motion.div>
                 )}
               </AnimatePresence>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -1141,13 +1269,13 @@ export default function App() {
   };
 
   const pageVariants = {
-    initial: { opacity: 0, y: 10 },
+    initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: -10 },
+    exit: { opacity: 0, y: -20 },
   };
 
   const pageTransition = {
-    duration: 0.6,
+    duration: 1.2,
     ease: [0.43, 0.13, 0.23, 0.96] // Custom cubic-bezier for smooth motion
   };
 

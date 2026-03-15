@@ -124,19 +124,23 @@ const Auth: React.FC<AuthProps> = ({ onClose, onSuccess }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
+      transition={{ duration: 0.8 }}
       className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-brand-dark/40 backdrop-blur-md"
     >
       <motion.div 
         initial={{ scale: 0.9, y: 20 }}
         animate={{ scale: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
         className="bg-white w-full max-w-md rounded-[40px] overflow-hidden shadow-2xl relative"
       >
-        <button 
+        <motion.button 
+          whileHover={{ scale: 1.1, rotate: 90 }}
+          whileTap={{ scale: 0.9 }}
           onClick={onClose}
-          className="absolute top-6 right-6 p-2 hover:bg-gray-100 rounded-full transition-colors z-10"
+          className="absolute top-6 right-6 p-2 hover:bg-gray-100 rounded-full transition-all z-10"
         >
           <X size={20} className="text-gray-400" />
-        </button>
+        </motion.button>
 
         <div className="p-10">
           <div className="text-center mb-10">
@@ -192,14 +196,16 @@ const Auth: React.FC<AuthProps> = ({ onClose, onSuccess }) => {
               </div>
             )}
 
-            <button 
+            <motion.button 
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               type="submit"
               disabled={loading}
-              className="w-full bg-brand-dark text-white py-4 rounded-2xl font-bold hover:bg-brand-orange transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+              className="w-full bg-brand-dark text-white py-4 rounded-2xl font-bold hover:bg-brand-orange transition-all flex items-center justify-center gap-2 disabled:opacity-50 shadow-lg shadow-brand-dark/10"
             >
               {loading ? 'Processing...' : (isLogin ? 'Sign In' : 'Create Account')}
               {!loading && <ArrowRight size={18} />}
-            </button>
+            </motion.button>
           </form>
 
           <div className="relative my-8">
@@ -211,22 +217,26 @@ const Auth: React.FC<AuthProps> = ({ onClose, onSuccess }) => {
             </div>
           </div>
 
-          <button 
+          <motion.button 
+            whileHover={{ scale: 1.02, backgroundColor: '#F9FAFB' }}
+            whileTap={{ scale: 0.98 }}
             onClick={handleGoogleSignIn}
             disabled={loading}
-            className="w-full border border-gray-100 py-4 rounded-2xl font-bold flex items-center justify-center gap-3 hover:bg-gray-50 transition-all mb-8"
+            className="w-full border border-gray-100 py-4 rounded-2xl font-bold flex items-center justify-center gap-3 transition-all mb-8 shadow-sm"
           >
             <Chrome size={20} className="text-brand-orange" />
             Google
-          </button>
+          </motion.button>
 
           <div className="text-center">
-            <button 
+            <motion.button 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={() => setIsLogin(!isLogin)}
               className="text-sm font-bold text-gray-400 hover:text-brand-orange transition-colors"
             >
               {isLogin ? "Don't have an account? Sign Up" : "Already have an account? Sign In"}
-            </button>
+            </motion.button>
           </div>
         </div>
       </motion.div>
