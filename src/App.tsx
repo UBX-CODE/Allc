@@ -35,7 +35,7 @@ import {
   LogOut,
   ShieldCheck
 } from 'lucide-react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import Booking from './Booking';
 import DoctorProfile from './DoctorProfile';
 import Dashboard from './Dashboard';
@@ -610,22 +610,17 @@ const WhyChoose = () => {
             {points.map((point, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, scale: 0.9, y: 30 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                whileHover={{ 
-                  y: -8, 
-                  boxShadow: "0 20px 40px -15px rgba(0,0,0,0.1)",
-                  transition: { duration: 0.3 } 
-                }}
-                className="bg-white p-6 md:p-8 rounded-3xl md:rounded-[32px] shadow-sm border border-brand-dark/5 transition-all duration-300 group"
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="bg-white p-6 md:p-8 rounded-3xl md:rounded-[32px] shadow-[0_4px_20px_-4px_rgba(45,57,41,0.05)] border border-brand-dark/5 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group"
               >
-                <div className="w-12 h-12 bg-brand-orange/10 rounded-2xl flex items-center justify-center text-brand-orange mb-6 group-hover:bg-brand-orange group-hover:text-white group-hover:rotate-6 transition-all duration-300">
+                <div className="w-12 h-12 bg-brand-orange/10 rounded-2xl flex items-center justify-center text-brand-orange mb-6 group-hover:bg-brand-orange group-hover:text-white group-hover:rotate-12 transition-all duration-300">
                   {point.icon}
                 </div>
-                <h4 className="text-xl font-bold text-brand-dark mb-3 leading-tight group-hover:text-brand-orange transition-colors duration-300">{point.title}</h4>
-                <p className="text-sm text-gray-500 leading-relaxed">{point.desc}</p>
+                <h4 className="text-xl font-bold text-brand-dark mb-3 leading-tight font-serif italic group-hover:text-brand-orange transition-colors">{point.title}</h4>
+                <p className="text-sm text-gray-500 leading-relaxed font-medium">{point.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -663,114 +658,133 @@ const AppointmentCTA = ({ onBook }: { onBook: () => void }) => {
 const Services = ({ onBook }: { onBook: () => void }) => {
   const services = [
     {
-      title: 'Precision Medicine',
-      desc: 'Cellular mapping for longevity.',
-      icon: <ShieldCheck size={20} />,
+      title: 'Individual Consultation',
+      desc: 'Expert guidance tailored to meet your unique metabolic and hormonal health needs.',
+      icon: <UserIcon size={32} />,
+      color: 'bg-brand-dark',
+      lightColor: 'bg-brand-dark/5',
+      number: '01'
     },
     {
-      title: 'Hormonal Wellness',
-      desc: 'Peak endocrine optimization.',
-      icon: <Activity size={20} />,
+      title: 'Long-Term Wellness',
+      desc: 'Sustained evidence-based plans for long-term vitality and disease prevention.',
+      icon: <Activity size={32} />,
+      color: 'bg-brand-orange',
+      lightColor: 'bg-brand-orange/10',
+      number: '02'
     },
     {
-      title: 'Partner Protocol',
-      desc: 'Synchronized health for couples.',
-      icon: <Users size={20} />,
+      title: 'Couple Plans',
+      desc: 'Synchronized wellness strategies perfectly balanced for partners and couples.',
+      icon: <Heart size={32} />,
+      color: 'bg-brand-dark',
+      lightColor: 'bg-brand-dark/5',
+      number: '03'
     },
     {
-      title: 'Family Longevity',
-      desc: 'Multi-generational clinical care.',
-      icon: <Heart size={20} />,
-    },
-    {
-      title: 'Concierge Care',
-      desc: 'Private medical management.',
-      icon: <Stethoscope size={20} />,
-    },
-    {
-      title: 'Nutritional Intake',
-      desc: 'Evidence-based food protocols.',
-      icon: <Users size={20} />,
+      title: 'Family Plans',
+      desc: 'Comprehensive clinical care designed to enhance the lives of your entire family.',
+      icon: <Home size={32} />,
+      color: 'bg-brand-orange',
+      lightColor: 'bg-brand-orange/10',
+      number: '04'
     }
   ];
 
   return (
-    <section id="services" className="py-12 lg:py-20 bg-brand-dark relative overflow-hidden">
-      {/* Subtle Background Elements */}
-      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-emerald-500/5 blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-emerald-500/5 blur-[120px] rounded-full pointer-events-none" />
+    <section id="services" className="py-32 bg-brand-bg relative overflow-hidden">
+      {/* Decorative background elements */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-brand-orange/5 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2"></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-brand-dark/5 blur-[100px] rounded-full translate-y-1/2 -translate-x-1/2"></div>
 
-      <div className="max-w-7xl mx-auto px-4 lg:px-12 relative z-10">
-        <div className="flex flex-col lg:flex-row justify-between items-end mb-10 lg:mb-16 gap-6">
-          <motion.div 
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+        <div className="text-center mb-24">
+          <motion.span 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="max-w-2xl"
+            className="text-brand-orange font-bold uppercase tracking-[0.3em] text-xs mb-4 block"
           >
-            <span className="text-emerald-400 font-bold uppercase tracking-[0.3em] text-[10px] mb-3 block">Programs</span>
-            <h2 className="text-4xl lg:text-6xl font-bold text-white font-serif leading-none tracking-tight">
-              Clinical <span className="italic font-normal text-emerald-400">Excellence.</span>
-            </h2>
-          </motion.div>
-          <motion.p 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
+            Expert Care
+          </motion.span>
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-white/40 text-xs lg:text-base max-w-[240px] leading-relaxed"
+            transition={{ delay: 0.1 }}
+            className="text-4xl md:text-6xl font-bold text-brand-dark mb-8"
           >
-            Optimized health architecture for long-term clinical vitality.
+            Our <span className="font-serif italic font-light">Bespoke</span> Services
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="text-gray-500 max-w-2xl mx-auto leading-relaxed text-lg"
+          >
+            Elevating your health through science-backed longevity strategies and personalized clinical excellence.
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-24 px-4 md:px-0">
           {services.map((service, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.05 }}
-              whileHover={{ y: -4, backgroundColor: 'rgba(255,255,255,0.06)' }}
-              className="group relative p-4 lg:p-8 rounded-[24px] lg:rounded-[40px] overflow-hidden bg-white/[0.03] border border-white/5 transition-all duration-300"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ 
+                duration: 0.8, 
+                delay: i * 0.15,
+                ease: [0.21, 0.45, 0.32, 0.9]
+              }}
+              whileHover={{ y: -12 }}
+              className="group relative bg-white p-6 md:p-10 rounded-[32px] md:rounded-[40px] shadow-[0_4px_20px_-4px_rgba(45,57,41,0.05)] border border-brand-dark/5 hover:border-brand-orange/20 transition-all duration-500 flex flex-col items-center text-center overflow-hidden"
             >
-              <div className="flex flex-col gap-3 lg:gap-6">
-                <div className="w-8 h-8 lg:w-12 lg:h-12 rounded-xl lg:rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center border border-emerald-500/10 transition-colors group-hover:bg-emerald-500 group-hover:text-white">
-                  {service.icon}
-                </div>
-                
-                <div>
-                  <h3 className="text-sm lg:text-xl font-bold text-white mb-1 lg:mb-2 tracking-tight">
-                    {service.title}
-                  </h3>
-                  <p className="text-[10px] lg:text-sm text-white/40 group-hover:text-white/60 leading-tight lg:leading-relaxed">
-                    {service.desc}
-                  </p>
+              {/* Background Number Accent */}
+              <span className="absolute top-4 right-6 md:top-6 md:right-8 text-5xl md:text-7xl font-serif font-bold text-brand-dark/[0.03] select-none group-hover:text-brand-orange/[0.05] transition-colors duration-500">
+                {service.number}
+              </span>
+
+              {/* Icon Container */}
+              <div className="relative mb-6 md:mb-10">
+                <div className={`absolute inset-0 ${service.color} opacity-20 blur-2xl rounded-full group-hover:opacity-40 transition-opacity duration-500`}></div>
+                <div className={`relative w-16 h-16 md:w-20 md:h-20 ${service.color} text-white rounded-2xl md:rounded-[24px] flex items-center justify-center shadow-xl group-hover:rotate-[10deg] transition-all duration-500 ease-out`}>
+                  {React.cloneElement(service.icon as React.ReactElement, { size: 28 })}
                 </div>
               </div>
 
-              {/* Subtle hover indicator */}
-              <div className="absolute bottom-6 right-8 opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0">
-                <ArrowUpRight size={14} className="text-emerald-400" />
-              </div>
+              <h3 className="text-xl md:text-2xl font-bold text-brand-dark mb-3 md:mb-4 leading-tight group-hover:text-brand-orange transition-colors duration-300">
+                {service.title}
+              </h3>
+              <p className="text-gray-500 text-xs md:text-sm leading-relaxed mb-6 md:mb-8 flex-grow">
+                {service.desc}
+              </p>
+
+              {/* Bottom Decoration */}
+              <div className="w-10 md:w-12 h-1 bg-gray-100 rounded-full group-hover:w-24 group-hover:bg-brand-orange transition-all duration-500"></div>
+              
+              {/* Hover Glow Effect */}
+              <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-brand-orange/5 blur-[60px] rounded-full group-hover:bg-brand-orange/10 transition-all duration-700"></div>
             </motion.div>
           ))}
         </div>
 
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="mt-12 lg:mt-16 flex flex-col items-center"
+          transition={{ delay: 0.6 }}
         >
           <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+            whileHover={{ scale: 1.05, boxShadow: "0 20px 40px -10px rgba(255,122,61,0.3)" }}
+            whileTap={{ scale: 0.95 }}
             onClick={onBook}
-            className="w-full lg:w-auto bg-emerald-600 text-white px-8 lg:px-12 py-4 lg:py-5 rounded-[20px] lg:rounded-[24px] font-bold text-sm lg:text-lg flex items-center justify-center gap-3 shadow-xl transition-all hover:bg-emerald-500"
+            className="bg-brand-dark text-white hover:bg-brand-orange px-12 py-5 rounded-2xl font-bold flex items-center gap-3 mx-auto transition-all duration-300 shadow-xl shadow-brand-dark/10"
           >
-            <span>Initiate Consultation</span>
-            <ArrowUpRight size={18} />
+            Book Your Consultation
+            <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
           </motion.button>
         </motion.div>
       </div>
@@ -826,28 +840,32 @@ const Pricing = ({ onBook }: { onBook: () => void }) => {
 
         <div className="grid lg:grid-cols-2 gap-8 mb-12">
           {pricingCategories.map((cat, idx) => (
-            <div
+            <motion.div
               key={idx}
-              className="bg-brand-bg rounded-3xl md:rounded-[40px] p-6 md:p-10 border border-brand-dark/5 flex flex-col"
+              initial={{ opacity: 0, x: idx === 0 ? -30 : 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="bg-brand-bg rounded-3xl md:rounded-[40px] p-6 md:p-10 border border-brand-dark/5 flex flex-col group hover:border-brand-orange/20 transition-colors duration-500"
             >
               <div className="flex items-center gap-4 mb-8">
-                <div className="w-12 h-12 bg-brand-orange/10 rounded-2xl flex items-center justify-center text-brand-orange">
+                <div className="w-12 h-12 bg-brand-orange/10 rounded-2xl flex items-center justify-center text-brand-orange group-hover:scale-110 transition-transform">
                   {cat.icon}
                 </div>
-                <h3 className="text-2xl font-bold text-brand-dark">{cat.title}</h3>
+                <h3 className="text-2xl font-bold text-brand-dark font-serif italic">{cat.title}</h3>
               </div>
               <div className="space-y-6 flex-grow">
                 {cat.plans.map((plan, pIdx) => (
-                  <div key={pIdx} className="bg-white rounded-3xl p-6 shadow-sm border border-brand-dark/5">
+                  <div key={pIdx} className="bg-white rounded-3xl p-6 shadow-sm border border-brand-dark/5 hover:shadow-md transition-shadow">
                     <div className="flex justify-between items-start mb-4">
                       <div>
                         <h4 className="font-bold text-brand-dark mb-1">{plan.service}</h4>
-                        <p className="text-xs text-gray-400 font-medium uppercase tracking-wider">{plan.desc}</p>
+                        <p className="text-xs text-brand-orange font-bold uppercase tracking-wider">{plan.desc}</p>
                       </div>
-                      <span className="text-xl font-bold text-brand-orange">{plan.price}</span>
+                      <span className="text-xl font-bold text-brand-dark">{plan.price}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-sm text-gray-500">
-                      <Clock size={14} />
+                    <div className="flex items-center gap-2 text-sm text-gray-500 font-medium">
+                      <Clock size={14} className="text-brand-orange" />
                       <span>{plan.duration}</span>
                     </div>
                   </div>
@@ -855,7 +873,7 @@ const Pricing = ({ onBook }: { onBook: () => void }) => {
                 {cat.note && (
                   <div className="flex gap-3 p-4 bg-brand-orange/5 rounded-2xl border border-brand-orange/10">
                     <Info size={18} className="text-brand-orange shrink-0 mt-0.5" />
-                    <p className="text-xs text-gray-500 leading-relaxed italic">{cat.note}</p>
+                    <p className="text-xs text-gray-600 leading-relaxed italic font-medium">{cat.note}</p>
                   </div>
                 )}
               </div>
@@ -863,36 +881,43 @@ const Pricing = ({ onBook }: { onBook: () => void }) => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={onBook}
-                className="mt-8 w-full bg-brand-dark text-white py-4 rounded-full font-bold hover:bg-brand-orange transition-all flex items-center justify-center gap-2 group shadow-lg shadow-brand-dark/10"
+                className="mt-8 w-full bg-brand-dark text-white py-5 rounded-full font-bold hover:bg-brand-orange transition-all flex items-center justify-center gap-2 group shadow-lg"
               >
                 Book Consultation
-                <ArrowUpRight size={18} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                <ArrowUpRight size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
               </motion.button>
-            </div>
+            </motion.div>
           ))}
         </div>
 
         {/* Long-Term & Couple Plans */}
         <div className="grid lg:grid-cols-2 gap-8 mb-12">
           {/* Long Term Wellness */}
-          <div className="bg-brand-dark rounded-[40px] p-10 text-white">
-            <div className="flex items-center gap-4 mb-8">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="bg-brand-dark rounded-[40px] p-10 text-white relative overflow-hidden group shadow-2xl"
+          >
+            <div className="absolute top-0 right-0 w-64 h-64 bg-brand-orange opacity-5 blur-[80px] rounded-full -translate-y-1/2 translate-x-1/2 group-hover:opacity-10 transition-opacity"></div>
+            <div className="flex items-center gap-4 mb-8 relative z-10">
               <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center text-brand-orange">
                 <Activity size={24} />
               </div>
-              <h3 className="text-2xl font-bold">Long-Term Wellness Plans</h3>
+              <h3 className="text-2xl font-bold font-serif italic">Long-Term Wellness</h3>
             </div>
-            <p className="text-white/60 text-sm mb-8">Individual plans focused on sustainable lifestyle and structured guidance.</p>
-            <div className="space-y-4">
+            <p className="text-white/60 text-sm mb-8 relative z-10 font-medium">Individual plans focused on sustainable lifestyle and structured guidance.</p>
+            <div className="space-y-4 relative z-10">
               {longTermPlans.map((plan, idx) => (
-                <div key={idx} className="bg-white/5 rounded-3xl p-6 border border-white/10 flex justify-between items-center">
+                <div key={idx} className="bg-white/5 rounded-3xl p-6 border border-white/10 hover:bg-white/10 transition-colors flex justify-between items-center group/item">
                   <div>
-                    <span className="text-xs font-bold text-brand-orange uppercase tracking-widest mb-1 block">{plan.duration}</span>
+                    <span className="text-xs font-bold text-brand-orange uppercase tracking-[0.2em] mb-1 block">{plan.duration}</span>
                     <h4 className="font-bold">Individual Wellness</h4>
                   </div>
                   <div className="text-right">
                     {plan.original && (
-                      <span className="block text-xs text-white/40 line-through mb-1">{plan.original}</span>
+                      <span className="block text-xs text-white/30 line-through mb-1 font-medium">{plan.original}</span>
                     )}
                     <span className="text-xl font-bold text-brand-orange">{plan.price}</span>
                   </div>
@@ -900,29 +925,35 @@ const Pricing = ({ onBook }: { onBook: () => void }) => {
               ))}
             </div>
             <motion.button
-              whileHover={{ scale: 1.02 }}
+              whileHover={{ scale: 1.02, x: 5 }}
               whileTap={{ scale: 0.98 }}
               onClick={onBook}
-              className="mt-8 w-full bg-brand-orange text-white py-4 rounded-full font-bold hover:bg-white hover:text-brand-dark transition-all shadow-lg shadow-brand-orange/20"
+              className="mt-8 w-full bg-brand-orange text-white py-5 rounded-full font-bold hover:bg-white hover:text-brand-dark transition-all shadow-xl shadow-brand-orange/20 relative z-10"
             >
-              Get Started
+              Get Started Now
             </motion.button>
-          </div>
+          </motion.div>
 
           {/* Couple Consultation */}
-          <div className="bg-brand-bg rounded-[40px] p-10 border border-brand-dark/5">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="bg-white rounded-[40px] p-10 border border-brand-dark/5 shadow-xl flex flex-col group hover:border-brand-orange/20 transition-all duration-500"
+          >
             <div className="flex items-center gap-4 mb-8">
               <div className="w-12 h-12 bg-brand-orange/10 rounded-2xl flex items-center justify-center text-brand-orange">
                 <Heart size={24} />
               </div>
-              <h3 className="text-2xl font-bold text-brand-dark">Couple Consultation Plans</h3>
+              <h3 className="text-2xl font-bold text-brand-dark font-serif italic">Couple Consultation</h3>
             </div>
-            <p className="text-gray-500 text-sm mb-8">Synchronized wellness strategies for partners and couples.</p>
-            <div className="space-y-4">
+            <p className="text-gray-500 text-sm mb-8 font-medium">Synchronized wellness strategies for partners and couples.</p>
+            <div className="space-y-4 flex-grow">
               {couplePlans.map((plan, idx) => (
-                <div key={idx} className="bg-white rounded-3xl p-6 border border-brand-dark/5 shadow-sm flex justify-between items-center">
+                <div key={idx} className="bg-brand-bg rounded-3xl p-6 border border-brand-dark/5 hover:bg-white transition-all flex justify-between items-center">
                   <div>
-                    <span className="text-xs font-bold text-brand-orange uppercase tracking-widest mb-1 block">{plan.duration}</span>
+                    <span className="text-xs font-bold text-brand-orange uppercase tracking-[0.2em] mb-1 block">{plan.duration}</span>
                     <h4 className="font-bold text-brand-dark">Couple Wellness</h4>
                   </div>
                   <span className="text-xl font-bold text-brand-orange">{plan.price}</span>
@@ -933,11 +964,11 @@ const Pricing = ({ onBook }: { onBook: () => void }) => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={onBook}
-              className="mt-8 w-full bg-brand-dark text-white py-4 rounded-full font-bold hover:bg-brand-orange transition-all shadow-lg shadow-brand-dark/10"
+              className="mt-8 w-full bg-brand-dark text-white py-5 rounded-full font-bold hover:bg-brand-orange transition-all shadow-lg"
             >
               Book Couple Plan
             </motion.button>
-          </div>
+          </motion.div>
         </div>
 
         {/* Specialized Programs */}
@@ -1071,7 +1102,15 @@ const Testimonials = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {testimonials.map((item, index) => (
-            <TestimonialCard key={index} item={item} />
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+            >
+              <TestimonialCard item={item} />
+            </motion.div>
           ))}
         </div>
       </div>
@@ -1116,8 +1155,12 @@ const FAQ = () => {
 
         <div className="space-y-4">
           {faqs.map((faq, i) => (
-            <div
+            <motion.div
               key={i}
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
               className="border-b border-gray-200"
             >
               <button
@@ -1147,7 +1190,7 @@ const FAQ = () => {
                   </motion.div>
                 )}
               </AnimatePresence>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
