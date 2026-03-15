@@ -11,21 +11,45 @@ interface BookingProps {
 
 const services = [
   { id: 'indiv', name: 'Individual Consultation', price: 5000 },
-  { id: 'metab', name: 'Metabolic Health Check', price: 12000 },
-  { id: 'longv', name: 'Longevity Program', price: 45000 },
-  { id: 'hormn', name: 'Hormonal Optimization', price: 18000 },
+  { id: 'sing', name: 'Single Family Consultation', price: 15000 },
+  { id: 'longv', name: 'Long-Term Wellness Plans', price: 20000 }, // Default for 3 months
+  { id: 'coupl', name: 'Couple Consultation Plans', price: 30000 }, // Default for 3 months
+  { id: 'grp', name: 'Group Consultation', price: 999 },
+  { id: 'culin', name: 'Culinary Workshops', price: 999 },
 ];
+
+const subPlanOptions: Record<string, { duration: string, price: number }[]> = {
+  'longv': [
+    { duration: "3 Months", price: 20000 },
+    { duration: "6 Months", price: 35000 },
+    { duration: "12 Months", price: 50000 }
+  ],
+  'coupl': [
+    { duration: "3 Months", price: 30000 },
+    { duration: "6 Months", price: 52500 },
+    { duration: "12 Months", price: 75000 }
+  ]
+};
 
 const Booking: React.FC<BookingProps> = ({ onBack }) => {
   const [selectedDate, setSelectedDate] = useState(16);
   const [selectedTime, setSelectedTime] = useState('12:00 PM');
   const [selectedService, setSelectedService] = useState(services[0]);
+  const [selectedSubPlan, setSelectedSubPlan] = useState<{ duration: string, price: number } | null>(null);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (selectedService.id === 'longv' || selectedService.id === 'coupl') {
+      setSelectedSubPlan(subPlanOptions[selectedService.id][0]);
+    } else {
+      setSelectedSubPlan(null);
+    }
+  }, [selectedService]);
 
   useEffect(() => {
     if (auth.currentUser) {
@@ -67,13 +91,18 @@ const Booking: React.FC<BookingProps> = ({ onBack }) => {
     setError(null);
 
     try {
+      const finalPrice = selectedSubPlan ? selectedSubPlan.price : selectedService.price;
+      const finalServiceName = selectedSubPlan 
+        ? `${selectedService.name} (${selectedSubPlan.duration})` 
+        : selectedService.name;
+
       const appointmentData = {
         userId: auth.currentUser.uid,
         name,
         phone,
         email,
-        service: selectedService.name,
-        price: selectedService.price,
+        service: finalServiceName,
+        price: finalPrice,
         date: `2026-09-${selectedDate}`,
         time: selectedTime,
         message,
@@ -91,8 +120,8 @@ const Booking: React.FC<BookingProps> = ({ onBack }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          service: selectedService.name,
-          price: selectedService.price,
+          service: finalServiceName,
+          price: finalPrice,
           appointmentData: {
             ...appointmentData,
             appointmentId: docRef.id,
@@ -190,11 +219,41 @@ const Booking: React.FC<BookingProps> = ({ onBack }) => {
                 >
                   <span className="text-xs font-bold">{s.name}</span>
                   <span className={`text-sm font-bold ${selectedService.id === s.id ? 'text-white' : 'text-brand-orange'}`}>
-                    Rs. {s.price.toLocaleString()}
+                    Rs. {(selectedService.id === s.id && selectedSubPlan ? selectedSubPlan.price : s.price).toLocaleString()}
                   </span>
                 </motion.button>
               ))}
             </div>
+
+            {selectedSubPlan && (
+              <motion.div 
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="space-y-4 pt-4 border-t border-gray-50"
+              >
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 flex items-center gap-2">
+                    Select Duration
+                  </label>
+                  <div className="grid grid-cols-3 gap-3">
+                    {subPlanOptions[selectedService.id].map((plan) => (
+                      <button
+                        key={plan.duration}
+                        onClick={() => setSelectedSubPlan(plan)}
+                        className={`
+                          py-3 rounded-xl text-xs font-bold transition-all border
+                          ${selectedSubPlan.duration === plan.duration
+                            ? 'bg-brand-orange border-brand-orange text-white shadow-md'
+                            : 'bg-white border-gray-100 text-brand-dark hover:border-brand-orange/30'}
+                        `}
+                      >
+                        {plan.duration}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            )}
           </div>
 
           {/* Date Selection */}

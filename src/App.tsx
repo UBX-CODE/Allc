@@ -4,13 +4,13 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { 
-  Menu, 
-  X, 
-  Star, 
-  ChevronRight, 
-  ArrowUpRight, 
-  Plus, 
+import {
+  Menu,
+  X,
+  Star,
+  ChevronRight,
+  ArrowUpRight,
+  Plus,
   Minus,
   CheckCircle2,
   Heart,
@@ -46,27 +46,31 @@ import docImg from './doc.png';
 
 // --- Components ---
 
-const Navbar = ({ onBook, user, onAuth, onSignOut, onDashboard }: { onBook: () => void, user: User | null, onAuth: () => void, onSignOut: () => void, onDashboard: () => void }) => {
+const Navbar = ({ onBook, user, onAuth, onSignOut, onDashboard, onHome }: { onBook: () => void, user: User | null, onAuth: () => void, onSignOut: () => void, onDashboard: () => void, onHome: () => void }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
 
   const navLinks = [
-    { name: 'Home', href: '#' },
-    { name: 'About', href: '#about' },
-    { name: 'Services', href: '#services' },
-    { name: 'Pricing', href: '#pricing' },
-    { name: 'Success Stories', href: '#testimonials' },
+    { name: 'Home', href: '#', icon: <Home size={20} /> },
+    { name: 'About', href: '#about', icon: <UserIcon size={20} /> },
+    { name: 'Services', href: '#services', icon: <Activity size={20} /> },
+    { name: 'Pricing', href: '#pricing', icon: <Tag size={20} /> },
+    { name: 'Success Stories', href: '#testimonials', icon: <Star size={20} /> },
   ];
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-brand-bg/80 backdrop-blur-sm py-6 border-b border-brand-dark/5">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="flex justify-between items-center">
-          <div className="flex items-center gap-2">
+          <motion.a 
+            href="#" 
+            onClick={onHome}
+            className="flex items-center gap-2 cursor-pointer"
+          >
             <span className="text-2xl font-bold text-brand-dark tracking-tight font-sans flex items-center gap-1">
               ALLC<span className="w-1.5 h-1.5 bg-brand-orange rounded-full mt-1"></span>
             </span>
-          </div>
+          </motion.a>
 
           {/* Desktop Menu */}
           <div className="hidden lg:flex items-center space-x-8">
@@ -74,6 +78,7 @@ const Navbar = ({ onBook, user, onAuth, onSignOut, onDashboard }: { onBook: () =
               <motion.a
                 key={link.name}
                 href={link.href}
+                onClick={onHome}
                 whileHover={{ y: -2 }}
                 className="text-sm font-semibold text-brand-dark/70 hover:text-brand-dark transition-colors"
               >
@@ -85,7 +90,7 @@ const Navbar = ({ onBook, user, onAuth, onSignOut, onDashboard }: { onBook: () =
           <div className="hidden lg:flex items-center gap-3">
             {user ? (
               <div className="relative">
-                <motion.button 
+                <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setShowUserMenu(!showUserMenu)}
@@ -99,7 +104,7 @@ const Navbar = ({ onBook, user, onAuth, onSignOut, onDashboard }: { onBook: () =
                 </motion.button>
                 <AnimatePresence>
                   {showUserMenu && (
-                    <motion.div 
+                    <motion.div
                       initial={{ opacity: 0, y: 10, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
@@ -110,7 +115,7 @@ const Navbar = ({ onBook, user, onAuth, onSignOut, onDashboard }: { onBook: () =
                         <p className="font-bold text-brand-dark truncate">{user.displayName || 'User'}</p>
                         <p className="text-xs text-gray-400 truncate">{user.email}</p>
                       </div>
-                      <motion.button 
+                      <motion.button
                         whileHover={{ x: 5 }}
                         onClick={() => {
                           onDashboard();
@@ -121,7 +126,7 @@ const Navbar = ({ onBook, user, onAuth, onSignOut, onDashboard }: { onBook: () =
                         <Activity size={18} />
                         My Appointments
                       </motion.button>
-                      <motion.button 
+                      <motion.button
                         whileHover={{ x: 5 }}
                         onClick={() => {
                           onSignOut();
@@ -137,7 +142,7 @@ const Navbar = ({ onBook, user, onAuth, onSignOut, onDashboard }: { onBook: () =
                 </AnimatePresence>
               </div>
             ) : (
-              <motion.button 
+              <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={onAuth}
@@ -146,7 +151,7 @@ const Navbar = ({ onBook, user, onAuth, onSignOut, onDashboard }: { onBook: () =
                 Sign In
               </motion.button>
             )}
-            <motion.div 
+            <motion.div
               whileHover={{ scale: 1.1, rotate: 10 }}
               whileTap={{ scale: 0.9 }}
               className="w-10 h-10 border border-brand-dark rounded-full flex items-center justify-center text-brand-dark hover:bg-brand-dark hover:text-white cursor-pointer transition-all shadow-sm"
@@ -167,33 +172,127 @@ const Navbar = ({ onBook, user, onAuth, onSignOut, onDashboard }: { onBook: () =
       {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div 
-            initial={{ opacity: 0, y: -20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.95 }}
-            transition={{ type: "spring", damping: 25, stiffness: 400 }}
-            className="lg:hidden absolute top-24 left-6 right-6 bg-white rounded-[32px] p-8 shadow-2xl space-y-6 border border-gray-100"
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:hidden absolute top-24 left-0 right-0 bg-brand-dark/95 backdrop-blur-xl overflow-hidden border-b border-white/5"
           >
-            {navLinks.map((link) => (
-              <motion.a
-                key={link.name}
-                href={link.href}
-                whileTap={{ x: 5 }}
-                className="block text-xl font-bold text-brand-dark hover:text-brand-orange transition-colors"
-                onClick={() => setIsOpen(false)}
+            <div className="p-8 pb-12 space-y-8 max-h-[calc(100vh-120px)] overflow-y-auto">
+              {/* Nav Links */}
+              <div className="grid grid-cols-1 gap-2">
+                {navLinks.map((link, idx) => (
+                  <motion.a
+                    key={link.name}
+                    href={link.href}
+                    initial={{ x: -20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: idx * 0.05 }}
+                    className="flex items-center gap-4 p-4 rounded-2xl text-white/70 hover:text-white hover:bg-white/5 transition-all text-lg font-bold"
+                    onClick={() => {
+                      onHome();
+                      setIsOpen(false);
+                    }}
+                  >
+                    <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-brand-orange">
+                      {link.icon}
+                    </div>
+                    {link.name}
+                  </motion.a>
+                ))}
+              </div>
+
+              {/* Action Button */}
+              <motion.button
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.3 }}
+                onClick={() => {
+                  onBook();
+                  setIsOpen(false);
+                }}
+                className="w-full bg-brand-orange text-white p-5 rounded-[24px] text-lg font-bold flex items-center justify-center gap-3 shadow-2xl shadow-brand-orange/20 relative group overflow-hidden"
               >
-                {link.name}
-              </motion.a>
-            ))}
-            <motion.button 
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={onBook}
-              className="w-full bg-brand-orange text-white px-6 py-4 rounded-2xl text-lg font-bold flex items-center justify-center gap-2 shadow-lg shadow-brand-orange/20"
-            >
-              Book Appointment
-              <ArrowUpRight size={20} />
-            </motion.button>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                <span>Book Appointment</span>
+                <ArrowUpRight size={22} />
+              </motion.button>
+
+              {/* Auth/User Section */}
+              <div className="pt-8 border-t border-white/10">
+                {user ? (
+                  <div className="space-y-6">
+                    <div className="flex items-center gap-4 p-5 bg-white/5 rounded-[24px] border border-white/5">
+                      <div className="w-14 h-14 bg-brand-orange/20 rounded-full flex items-center justify-center text-brand-orange border border-brand-orange/30 overflow-hidden ring-4 ring-brand-orange/5">
+                        {user.photoURL ? (
+                          <img src={user.photoURL} alt={user.displayName || 'User'} className="w-full h-full object-cover" />
+                        ) : (
+                          <UserIcon size={28} />
+                        )}
+                      </div>
+                      <div className="text-left overflow-hidden">
+                        <p className="font-bold text-white text-lg truncate">{user.displayName || 'User'}</p>
+                        <p className="text-sm text-white/40 truncate">{user.email}</p>
+                      </div>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 gap-2">
+                      <motion.button
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => {
+                          onDashboard();
+                          setIsOpen(false);
+                        }}
+                        className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 text-white font-bold hover:bg-white/10 transition-all border border-white/5"
+                      >
+                        <div className="w-10 h-10 rounded-xl bg-brand-orange/10 flex items-center justify-center text-brand-orange">
+                          <Activity size={20} />
+                        </div>
+                        My Appointments
+                      </motion.button>
+
+                      <motion.button
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => {
+                          onSignOut();
+                          setIsOpen(false);
+                        }}
+                        className="flex items-center gap-4 p-4 rounded-2xl bg-rose-500/10 text-rose-500 font-bold hover:bg-rose-500/20 transition-all border border-rose-500/20"
+                      >
+                        <div className="w-10 h-10 rounded-xl bg-rose-500/10 flex items-center justify-center">
+                          <LogOut size={20} />
+                        </div>
+                        Sign Out
+                      </motion.button>
+                    </div>
+                  </div>
+                ) : (
+                  <motion.button
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.4 }}
+                    onClick={() => {
+                      onAuth();
+                      setIsOpen(false);
+                    }}
+                    className="w-full bg-white/5 text-white p-5 rounded-[24px] text-lg font-bold flex items-center justify-center gap-3 border border-white/10 hover:bg-white/10 transition-all"
+                  >
+                    <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-brand-orange">
+                      <UserCircle size={24} />
+                    </div>
+                    Sign In
+                  </motion.button>
+                )}
+              </div>
+
+              {/* Mobile Socials */}
+              <div className="flex justify-center gap-6 pt-4 grayscale opacity-30">
+                <Facebook size={20} className="text-white" />
+                <Instagram size={20} className="text-white" />
+                <Twitter size={20} className="text-white" />
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -207,9 +306,9 @@ const Hero = ({ onBook, onViewServices }: { onBook: () => void, onViewServices: 
       {/* Background Heartbeat Lines */}
       <div className="absolute inset-0 pointer-events-none opacity-20">
         <svg className="w-full h-full" viewBox="0 0 1440 800" fill="none">
-          <path 
-            d="M0 400L100 400L120 350L140 450L160 400L400 400L420 300L440 500L460 400L800 400L820 320L840 480L860 400L1100 400L1120 380L1140 420L1160 400L1440 400" 
-            stroke="#FF7A3D" 
+          <path
+            d="M0 400L100 400L120 350L140 450L160 400L400 400L420 300L440 500L460 400L800 400L820 320L840 480L860 400L1100 400L1120 380L1140 420L1160 400L1440 400"
+            stroke="#FF7A3D"
             strokeWidth="2"
             strokeDasharray="10 10"
           />
@@ -222,7 +321,7 @@ const Hero = ({ onBook, onViewServices }: { onBook: () => void, onViewServices: 
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative">
         <div className="grid lg:grid-cols-[1fr_2fr_1fr] gap-8 items-center">
-          
+
           {/* Left Column (Desktop Only) */}
           <div className="hidden lg:flex flex-col gap-16">
             <div className="space-y-4">
@@ -239,7 +338,7 @@ const Hero = ({ onBook, onViewServices }: { onBook: () => void, onViewServices: 
               <p className="text-sm font-bold text-brand-dark">Happy Patients</p>
             </div>
 
-            <motion.div 
+            <motion.div
               initial={{ x: -20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               className="bg-white p-6 rounded-[32px] shadow-xl max-w-[240px] border border-brand-dark/5"
@@ -256,20 +355,20 @@ const Hero = ({ onBook, onViewServices }: { onBook: () => void, onViewServices: 
           <div className="text-center space-y-8 lg:space-y-12 relative py-10 lg:py-0">
             {/* Mobile Floating Badges */}
             <div className="lg:hidden absolute -top-1 left-1/2 -translate-x-1/2 whitespace-nowrap">
-               <motion.div
-                 initial={{ scale: 0 }}
-                 animate={{ scale: 1 }}
-                 className="flex -space-x-3 mb-2"
-               >
-                 {[1, 2, 3].map((i) => (
-                   <div key={i} className="w-8 h-8 rounded-full border-2 border-white overflow-hidden bg-gray-200 shadow-sm">
-                     <img src={`https://i.pravatar.cc/150?u=${i+10}`} alt="Patient" className="w-full h-full object-cover" />
-                   </div>
-                 ))}
-                 <div className="w-8 h-8 rounded-full border-2 border-white bg-brand-orange flex items-center justify-center text-white text-[8px] font-bold shadow-sm">
-                   +2k
-                 </div>
-               </motion.div>
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                className="flex -space-x-3 mb-2"
+              >
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="w-8 h-8 rounded-full border-2 border-white overflow-hidden bg-gray-200 shadow-sm">
+                    <img src={`https://i.pravatar.cc/150?u=${i + 10}`} alt="Patient" className="w-full h-full object-cover" />
+                  </div>
+                ))}
+                <div className="w-8 h-8 rounded-full border-2 border-white bg-brand-orange flex items-center justify-center text-white text-[8px] font-bold shadow-sm">
+                  +2k
+                </div>
+              </motion.div>
             </div>
 
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-brand-orange/10 rounded-full text-brand-orange text-[10px] lg:text-xs font-bold tracking-widest uppercase">
@@ -283,9 +382,9 @@ const Hero = ({ onBook, onViewServices }: { onBook: () => void, onViewServices: 
                 <span className="italic font-normal text-brand-orange">health</span> <br />
                 with precision medicine
               </h1>
-              
+
               {/* Mobile Only Experience Badge */}
-              <motion.div 
+              <motion.div
                 initial={{ scale: 0, rotate: -20 }}
                 animate={{ scale: 1, rotate: 12 }}
                 transition={{ duration: 1.5, type: "spring", bounce: 0.3 }}
@@ -301,7 +400,7 @@ const Hero = ({ onBook, onViewServices }: { onBook: () => void, onViewServices: 
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 px-6 lg:px-0">
-              <motion.button 
+              <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={onBook}
@@ -310,10 +409,10 @@ const Hero = ({ onBook, onViewServices }: { onBook: () => void, onViewServices: 
                 Book Appointment
                 <ArrowUpRight size={20} />
               </motion.button>
-              <motion.button 
+              <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={onViewServices}    
+                onClick={onViewServices}
                 className="w-full sm:w-auto bg-white text-brand-dark px-10 py-4 lg:py-4 rounded-full font-bold border border-brand-dark/10 hover:bg-gray-50 transition-all shadow-sm active:scale-95">
                 Explore Services
               </motion.button>
@@ -323,10 +422,10 @@ const Hero = ({ onBook, onViewServices }: { onBook: () => void, onViewServices: 
           {/* Right Column (Desktop Only) */}
           <div className="hidden lg:flex flex-col items-end gap-16">
             <div className="w-64 aspect-[4/5] rounded-[48px] overflow-hidden shadow-2xl rotate-3 border-8 border-white">
-              <img 
-                src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=600" 
-                className="w-full h-full object-cover" 
-                alt="Exercise" 
+              <img
+                src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=600"
+                className="w-full h-full object-cover"
+                alt="Exercise"
               />
             </div>
 
@@ -365,7 +464,7 @@ const About = ({ onBook, onKnowMore }: { onBook: () => void, onKnowMore: () => v
               </div>
 
               {/* Professional Status Badge for Mobile */}
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
@@ -381,9 +480,9 @@ const About = ({ onBook, onKnowMore }: { onBook: () => void, onKnowMore: () => v
               </motion.div>
 
               <div className="relative z-10 rounded-full lg:rounded-[40px] overflow-hidden shadow-2xl aspect-square lg:aspect-[4/5] w-56 h-56 lg:w-[440px] lg:h-auto mx-auto border-4 border-white lg:border-0">
-                <img 
-                  src={docImg} 
-                  alt="Dr. Divya Gautam" 
+                <img
+                  src={docImg}
+                  alt="Dr. Divya Gautam"
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
                 />
@@ -424,7 +523,7 @@ const About = ({ onBook, onKnowMore }: { onBook: () => void, onKnowMore: () => v
               She follows an evidence-based, systematic, and scientific approach to the curative and preventive aspects of lifestyle diseases. She has been supporting and guiding people in reversing lifestyle diseases, optimizing metabolic and hormonal wellness, and embracing healthy habits that safeguard their future.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mb-10 px-4 lg:px-0">
-              <motion.button 
+              <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={onBook}
@@ -433,7 +532,7 @@ const About = ({ onBook, onKnowMore }: { onBook: () => void, onKnowMore: () => v
                 Book Appointment
                 <ArrowUpRight size={20} />
               </motion.button>
-              <motion.button 
+              <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={onKnowMore}
@@ -497,7 +596,7 @@ const WhyChoose = () => {
                 Our goal is to shape lives that are not just longer, but disease-free, drug-free, jubilant, and full of vitality and vigour.
               </p>
             </div>
-            <motion.button 
+            <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="bg-brand-dark text-white px-8 py-4 rounded-full font-bold flex items-center gap-2 hover:bg-brand-orange transition-all shadow-lg shadow-brand-dark/10"
@@ -509,8 +608,8 @@ const WhyChoose = () => {
 
           <div className="grid sm:grid-cols-2 gap-6">
             {points.map((point, i) => (
-              <div 
-                key={i} 
+              <div
+                key={i}
                 className="bg-white p-6 md:p-8 rounded-3xl md:rounded-[32px] shadow-sm border border-brand-dark/5 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group"
               >
                 <div className="w-12 h-12 bg-brand-orange/10 rounded-2xl flex items-center justify-center text-brand-orange mb-6 group-hover:bg-brand-orange group-hover:text-white transition-colors duration-300">
@@ -536,7 +635,7 @@ const AppointmentCTA = ({ onBook }: { onBook: () => void }) => {
         <h2 className="text-4xl md:text-7xl font-bold text-white mb-12 leading-tight">
           For Appointment <span className="italic font-light">Booking</span>
         </h2>
-        <motion.button 
+        <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={onBook}
@@ -595,7 +694,7 @@ const Services = ({ onBook }: { onBook: () => void }) => {
             </span>
           </h2>
           <p className="text-gray-500 max-w-2xl mx-auto leading-relaxed">
-            Our mission is to drive progress and enhance the lives of our patients by delivering 
+            Our mission is to drive progress and enhance the lives of our patients by delivering
             superior clinical services that exceed expectations.
           </p>
         </div>
@@ -612,7 +711,7 @@ const Services = ({ onBook }: { onBook: () => void }) => {
           ))}
         </div>
 
-        <motion.button 
+        <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={onBook}
@@ -674,7 +773,7 @@ const Pricing = ({ onBook }: { onBook: () => void }) => {
 
         <div className="grid lg:grid-cols-2 gap-8 mb-12">
           {pricingCategories.map((cat, idx) => (
-            <div 
+            <div
               key={idx}
               className="bg-brand-bg rounded-3xl md:rounded-[40px] p-6 md:p-10 border border-brand-dark/5 flex flex-col"
             >
@@ -707,7 +806,7 @@ const Pricing = ({ onBook }: { onBook: () => void }) => {
                   </div>
                 )}
               </div>
-              <motion.button 
+              <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={onBook}
@@ -747,7 +846,7 @@ const Pricing = ({ onBook }: { onBook: () => void }) => {
                 </div>
               ))}
             </div>
-            <motion.button 
+            <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={onBook}
@@ -777,7 +876,7 @@ const Pricing = ({ onBook }: { onBook: () => void }) => {
                 </div>
               ))}
             </div>
-            <motion.button 
+            <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={onBook}
@@ -810,7 +909,7 @@ const Pricing = ({ onBook }: { onBook: () => void }) => {
               desc: "Learn the art of healthy cooking for sustainable longevity."
             }
           ].map((item, idx) => (
-            <div 
+            <div
               key={idx}
               className="bg-white p-8 rounded-[32px] border border-brand-dark/5 shadow-sm hover:shadow-md transition-all text-center"
             >
@@ -873,7 +972,7 @@ const TestimonialCard: React.FC<{ item: any }> = ({ item }) => {
           {isExpanded || !isLong ? item.text : `${item.text.substring(0, maxLength)}...`}
         </p>
         {isLong && (
-          <button 
+          <button
             onClick={() => setIsExpanded(!isExpanded)}
             className="text-brand-orange text-xs font-bold mb-6 hover:underline uppercase tracking-widest"
           >
@@ -911,12 +1010,12 @@ const Testimonials = () => {
   return (
     <section id="testimonials" className="py-24 bg-brand-bg relative overflow-hidden">
       <div className="absolute top-1/2 left-0 w-[30%] h-[30%] bg-brand-orange/5 blur-[100px] rounded-full -translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
-      
+
       <div className="max-w-7xl mx-auto px-6 lg:px-12 text-center relative z-10">
         <h2 className="text-4xl md:text-6xl font-bold text-brand-dark mb-16">
           Success Stories
         </h2>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {testimonials.map((item, index) => (
             <TestimonialCard key={index} item={item} />
@@ -950,7 +1049,7 @@ const FAQ = () => {
         >
           <h2 className="text-4xl md:text-7xl font-bold text-brand-dark mb-8 leading-tight">Everything You<br />Need to Know</h2>
           <p className="text-gray-500 mb-12 max-w-sm">Find quick answers to the most frequently asked questions about our services.</p>
-          <motion.button 
+          <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="bg-brand-orange text-white px-1 py-1 rounded-full flex items-center gap-4 pr-1 shadow-lg shadow-brand-orange/20"
@@ -964,11 +1063,11 @@ const FAQ = () => {
 
         <div className="space-y-4">
           {faqs.map((faq, i) => (
-            <div 
-              key={i} 
+            <div
+              key={i}
               className="border-b border-gray-200"
             >
-              <button 
+              <button
                 onClick={() => setOpenIndex(openIndex === i ? -1 : i)}
                 className="w-full py-6 flex justify-between items-center text-left group transition-all"
               >
@@ -1098,6 +1197,12 @@ export default function App() {
     }
   };
 
+  const resetView = () => {
+    setShowBooking(false);
+    setShowDoctorProfile(false);
+    setShowDashboard(false);
+  };
+
   const pageVariants = {
     initial: { opacity: 0 },
     animate: { opacity: 1 },
@@ -1116,14 +1221,15 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-brand-bg font-sans text-brand-dark selection:bg-brand-orange/20 selection:text-brand-orange">
-      <Navbar 
-        onBook={() => setShowBooking(true)} 
+      <Navbar
+        onBook={() => setShowBooking(true)}
         onDashboard={() => setShowDashboard(true)}
-        user={user} 
-        onAuth={() => setShowAuth(true)} 
-        onSignOut={handleSignOut} 
+        user={user}
+        onAuth={() => setShowAuth(true)}
+        onSignOut={handleSignOut}
+        onHome={resetView}
       />
-      
+
       <AnimatePresence mode="wait">
         {showDashboard ? (
           <motion.div
@@ -1158,8 +1264,8 @@ export default function App() {
             variants={pageVariants}
             transition={pageTransition}
           >
-            <DoctorProfile 
-              onBack={() => setShowDoctorProfile(false)} 
+            <DoctorProfile
+              onBack={() => setShowDoctorProfile(false)}
               onBook={() => {
                 setShowDoctorProfile(false);
                 setShowBooking(true);
@@ -1183,12 +1289,12 @@ export default function App() {
             transition={pageTransition}
           >
             <main>
-              <Hero 
-                onBook={() => setShowBooking(true)} 
+              <Hero
+                onBook={() => setShowBooking(true)}
                 onViewServices={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
               />
-              <About 
-                onBook={() => setShowBooking(true)} 
+              <About
+                onBook={() => setShowBooking(true)}
                 onKnowMore={() => setShowDoctorProfile(true)}
               />
               <WhyChoose />
