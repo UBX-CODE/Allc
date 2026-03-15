@@ -1,0 +1,47 @@
+{
+  "entities": {
+    "users": {
+      "title": "User",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "email": { "type": "string", "format": "email", "description": "User email address" },
+        "displayName": { "type": "string", "description": "User's full name" },
+        "photoURL": { "type": "string", "format": "uri", "description": "User's profile picture URL" },
+        "role": { "type": "string", "enum": ["user", "admin"], "description": "User role" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Account creation timestamp" }
+      },
+      "required": ["uid", "email", "role", "createdAt"]
+    },
+    "appointments": {
+      "title": "Appointment",
+      "description": "Booking details for a consultation",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "UID of the user who booked" },
+        "name": { "type": "string", "description": "Patient name" },
+        "email": { "type": "string", "format": "email", "description": "Contact email" },
+        "phone": { "type": "string", "description": "Contact phone" },
+        "service": { "type": "string", "description": "Selected service" },
+        "price": { "type": "number", "description": "Price of the service" },
+        "date": { "type": "string", "format": "date", "description": "Appointment date" },
+        "time": { "type": "string", "description": "Appointment time" },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "cancelled", "paid"], "description": "Appointment status" },
+        "paymentId": { "type": "string", "description": "Stripe payment intent ID" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Booking timestamp" }
+      },
+      "required": ["userId", "name", "email", "service", "price", "date", "time", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "users",
+      "description": "User profiles"
+    },
+    "appointments/{appointmentId}": {
+      "schema": "appointments",
+      "description": "Consultation bookings"
+    }
+  }
+}
