@@ -32,7 +32,8 @@ import {
   Clock,
   Info,
   Tag,
-  LogOut
+  LogOut,
+  ShieldCheck
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import Booking from './Booking';
@@ -186,7 +187,7 @@ const Navbar = ({ onBook, user, onAuth, onSignOut, onDashboard }: { onBook: () =
 
 const Hero = ({ onBook, onViewServices }: { onBook: () => void, onViewServices: () => void }) => {
   return (
-    <section className="relative pt-32 pb-20 overflow-hidden bg-brand-bg">
+    <section className="relative pt-24 pb-20 lg:pt-32 lg:pb-20 overflow-hidden bg-brand-bg">
       {/* Background Heartbeat Lines */}
       <div className="absolute inset-0 pointer-events-none opacity-20">
         <svg className="w-full h-full" viewBox="0 0 1440 800" fill="none">
@@ -196,20 +197,17 @@ const Hero = ({ onBook, onViewServices }: { onBook: () => void, onViewServices: 
             strokeWidth="2"
             strokeDasharray="10 10"
           />
-          <path 
-            d="M0 500L200 500L220 450L240 550L260 500L600 500L620 400L640 600L660 500L1000 500L1020 420L1040 580L1060 500L1440 500" 
-            stroke="#2D3929" 
-            strokeWidth="1"
-            strokeDasharray="5 5"
-            className="opacity-50"
-          />
         </svg>
       </div>
+
+      {/* Decorative Orbs - Mobile & Desktop */}
+      <div className="absolute top-20 left-[-10%] w-[40%] h-[40%] bg-brand-orange/5 blur-[120px] rounded-full pointer-events-none"></div>
+      <div className="absolute bottom-10 right-[-10%] w-[30%] h-[30%] bg-brand-orange/10 blur-[100px] rounded-full pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative">
         <div className="grid lg:grid-cols-[1fr_2fr_1fr] gap-8 items-center">
           
-          {/* Left Column */}
+          {/* Left Column (Desktop Only) */}
           <div className="hidden lg:flex flex-col gap-16">
             <div className="space-y-4">
               <div className="flex -space-x-4">
@@ -238,31 +236,62 @@ const Hero = ({ onBook, onViewServices }: { onBook: () => void, onViewServices: 
             </motion.div>
           </div>
 
-          {/* Center Column */}
-          <div className="text-center space-y-12">
+          {/* Center Column (Responsive) */}
+          <div className="text-center space-y-8 lg:space-y-12 relative py-10 lg:py-0">
+            {/* Mobile Floating Badges */}
+            <div className="lg:hidden absolute -top-1 left-1/2 -translate-x-1/2 whitespace-nowrap">
+               <motion.div
+                 initial={{ scale: 0 }}
+                 animate={{ scale: 1 }}
+                 className="flex -space-x-3 mb-2"
+               >
+                 {[1, 2, 3].map((i) => (
+                   <div key={i} className="w-8 h-8 rounded-full border-2 border-white overflow-hidden bg-gray-200 shadow-sm">
+                     <img src={`https://i.pravatar.cc/150?u=${i+10}`} alt="Patient" className="w-full h-full object-cover" />
+                   </div>
+                 ))}
+                 <div className="w-8 h-8 rounded-full border-2 border-white bg-brand-orange flex items-center justify-center text-white text-[8px] font-bold shadow-sm">
+                   +2k
+                 </div>
+               </motion.div>
+            </div>
+
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-brand-orange/10 rounded-full text-brand-orange text-xs font-bold tracking-widest uppercase"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-brand-orange/10 rounded-full text-brand-orange text-[10px] lg:text-xs font-bold tracking-widest uppercase"
             >
               <span className="w-2 h-2 bg-brand-orange rounded-full animate-pulse"></span>
               Elegant mission to wellness
             </motion.div>
 
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-4xl sm:text-6xl md:text-[84px] font-serif text-brand-dark leading-[1] tracking-tight"
-            >
-              Transform your <span className="italic font-normal text-brand-orange">health</span> <br />
-              with precision medicine
-            </motion.h1>
+            <div className="relative">
+              <motion.h1 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-5xl sm:text-7xl lg:text-[84px] font-serif text-brand-dark leading-[1.1] lg:leading-[1] tracking-tight"
+              >
+                Transform your <br className="lg:hidden" />
+                <span className="italic font-normal text-brand-orange">health</span> <br />
+                with precision medicine
+              </motion.h1>
+              
+              {/* Mobile Only Experience Badge */}
+              <motion.div 
+                initial={{ scale: 0, rotate: -20 }}
+                animate={{ scale: 1, rotate: 12 }}
+                className="lg:hidden absolute -top-6 -right-4 w-14 h-14 bg-[#F4FF99] rounded-full flex flex-col items-center justify-center text-brand-dark shadow-xl border-2 border-white z-10"
+              >
+                <span className="text-xs font-bold leading-tight">15+</span>
+                <span className="text-[5px] font-black uppercase text-center px-1">Years</span>
+              </motion.div>
+            </div>
 
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="text-lg text-gray-500 max-w-xl mx-auto leading-relaxed"
+              className="text-base lg:text-lg text-gray-500 max-w-xl mx-auto leading-relaxed px-4 lg:px-0"
             >
               Personalised, Clinical, Evidence Based Wellness For Long Term Vitality. Join us on a journey to optimal health.
             </motion.p>
@@ -271,24 +300,24 @@ const Hero = ({ onBook, onViewServices }: { onBook: () => void, onViewServices: 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="flex flex-col sm:flex-row items-center justify-center gap-4"
+              className="flex flex-col sm:flex-row items-center justify-center gap-4 px-6 lg:px-0"
             >
               <button 
                 onClick={onBook}
-                className="bg-brand-dark text-white px-10 py-4 rounded-full font-bold flex items-center gap-2 hover:bg-brand-orange transition-all hover:scale-105"
+                className="w-full sm:w-auto bg-brand-dark text-white px-10 py-4 lg:py-4 rounded-full font-bold flex items-center justify-center gap-2 hover:bg-brand-orange transition-all active:scale-95"
               >
                 Book Appointment
                 <ArrowUpRight size={20} />
               </button>
               <button 
                 onClick={onViewServices}    
-                className="bg-white text-brand-dark px-10 py-4 rounded-full font-bold border border-brand-dark/10 hover:bg-gray-50 transition-all">
+                className="w-full sm:w-auto bg-white text-brand-dark px-10 py-4 lg:py-4 rounded-full font-bold border border-brand-dark/10 hover:bg-gray-50 transition-all active:scale-95">
                 Explore Services
               </button>
             </motion.div>
           </div>
 
-          {/* Right Column */}
+          {/* Right Column (Desktop Only) */}
           <div className="hidden lg:flex flex-col items-end gap-16">
             <motion.div 
               initial={{ scale: 0.8, opacity: 0 }}
@@ -325,8 +354,12 @@ const Hero = ({ onBook, onViewServices }: { onBook: () => void, onViewServices: 
 
 const About = ({ onBook, onKnowMore }: { onBook: () => void, onKnowMore: () => void }) => {
   return (
-    <section id="about" className="py-24 bg-brand-bg overflow-hidden border-t border-brand-dark/5">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+    <section id="about" className="py-24 bg-brand-bg relative overflow-hidden border-t border-brand-dark/5">
+      {/* Background Decorative Elements - Mobile and Desktop */}
+      <div className="lg:hidden absolute top-0 right-[-10%] w-[50%] h-[30%] bg-brand-orange/5 blur-[80px] rounded-full pointer-events-none"></div>
+      <div className="lg:hidden absolute bottom-20 left-[-10%] w-[40%] h-[30%] bg-brand-dark/5 blur-[80px] rounded-full pointer-events-none"></div>
+
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 relative">
         <div className="grid lg:grid-cols-2 gap-20 items-center">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -334,19 +367,57 @@ const About = ({ onBook, onKnowMore }: { onBook: () => void, onKnowMore: () => v
             viewport={{ once: true }}
             className="relative"
           >
-            <div className="relative z-10 rounded-full lg:rounded-[40px] overflow-hidden shadow-2xl aspect-square lg:aspect-[4/5] w-56 h-56 lg:w-[440px] lg:h-auto mx-auto border-4 border-white lg:border-0">
-              <img 
-                src={docImg} 
-                alt="Dr. Divya Gautam" 
-                className="w-full h-full object-cover"
-                referrerPolicy="no-referrer"
-              />
+            <div className="relative py-12 lg:py-0">
+              {/* Professional Background Elements - Mobile Only */}
+              <div className="lg:hidden absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div className="w-[320px] h-[320px] bg-brand-orange/[0.03] rounded-full border border-brand-orange/10" />
+                <div className="absolute w-[240px] h-[240px] bg-brand-dark/[0.02] rounded-full translate-x-10 -translate-y-10" />
+              </div>
+
+              {/* Professional Status Badge for Mobile */}
+              <motion.div 
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="lg:hidden absolute top-4 right-0 bg-white/90 backdrop-blur-md px-4 py-3 rounded-2xl shadow-xl border border-brand-dark/5 flex items-center gap-3 z-20"
+              >
+                <div className="w-8 h-8 bg-brand-orange/10 rounded-lg flex items-center justify-center text-brand-orange">
+                  <ShieldCheck size={18} />
+                </div>
+                <div>
+                  <p className="text-[10px] font-bold text-brand-dark leading-none">Evidence Based</p>
+                  <p className="text-[8px] text-gray-400 mt-1 uppercase tracking-widest font-bold">Clinical Care</p>
+                </div>
+              </motion.div>
+
+              <div className="relative z-10 rounded-full lg:rounded-[40px] overflow-hidden shadow-2xl aspect-square lg:aspect-[4/5] w-56 h-56 lg:w-[440px] lg:h-auto mx-auto border-4 border-white lg:border-0">
+                <img 
+                  src={docImg} 
+                  alt="Dr. Divya Gautam" 
+                  className="w-full h-full object-cover"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
+
+              {/* Mobile Expertise Badge */}
+              <motion.div 
+                initial={{ scale: 0, rotate: -20 }}
+                whileInView={{ scale: 1, rotate: -12 }}
+                viewport={{ once: true }}
+                className="lg:hidden absolute -top-4 left-6 w-20 h-20 bg-brand-dark rounded-full flex flex-col items-center justify-center text-white shadow-2xl border-4 border-white z-20"
+              >
+                <Stethoscope size={20} className="text-brand-orange mb-1" />
+                <span className="text-[8px] font-black uppercase tracking-tighter">Medical</span>
+                <span className="text-[8px] font-black uppercase tracking-tighter text-brand-orange">Expert</span>
+              </motion.div>
             </div>
+
             {/* Qualifications Card */}
             <motion.div 
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.3 }}
+              viewport={{ once: true }}
               className="relative lg:absolute mt-8 lg:mt-0 lg:-bottom-10 lg:-right-10 bg-brand-orange text-white p-6 lg:p-8 rounded-[32px] shadow-xl w-[240px] lg:max-w-[280px] z-20 mx-auto lg:mx-0"
             >
               <h4 className="font-bold text-base lg:text-lg mb-3 lg:mb-4">Qualifications</h4>
@@ -365,28 +436,30 @@ const About = ({ onBook, onKnowMore }: { onBook: () => void, onKnowMore: () => v
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
+            className="text-center lg:text-left"
           >
             <span className="text-brand-orange font-bold uppercase tracking-widest text-xs mb-4 block">About Dr. Divya Gautam</span>
-            <h2 className="text-3xl md:text-5xl font-bold text-brand-dark mb-8 leading-tight">
-              A Holistic Approach to <span className="italic font-light">Lifestyle</span> Medicine
+            <h2 className="text-4xl md:text-5xl font-bold text-brand-dark mb-8 leading-tight">
+              A Holistic Approach to <br />
+              <span className="italic font-light text-brand-orange">Lifestyle</span> Medicine
             </h2>
-            <p className="text-gray-500 text-lg mb-8 leading-relaxed">
+            <p className="text-gray-500 text-base lg:text-lg mb-8 leading-relaxed px-2 lg:px-0">
               Dr. Divya started her journey in 2010 and gained a profound clinical insight into the way the human body works, heals, and adapts to disease. Along with conventional medical practices, she had been passionate about the holistic management of lifestyle diseases.
             </p>
-            <p className="text-gray-500 text-lg mb-8 leading-relaxed">
+            <p className="text-gray-500 text-base lg:text-lg mb-8 leading-relaxed px-2 lg:px-0">
               She follows an evidence-based, systematic, and scientific approach to the curative and preventive aspects of lifestyle diseases. She has been supporting and guiding people in reversing lifestyle diseases, optimizing metabolic and hormonal wellness, and embracing healthy habits that safeguard their future.
             </p>
-            <div className="flex gap-4 mb-10">
+            <div className="flex flex-col sm:flex-row gap-4 mb-10 px-4 lg:px-0">
               <button 
                 onClick={onBook}
-                className="bg-brand-dark text-white px-8 py-4 rounded-full font-bold flex items-center gap-2 hover:bg-brand-orange transition-colors"
+                className="w-full sm:w-auto bg-brand-dark text-white px-8 py-4 rounded-full font-bold flex items-center justify-center gap-2 hover:bg-brand-orange transition-all active:scale-95"
               >
                 Book Appointment
                 <ArrowUpRight size={20} />
               </button>
               <button 
                 onClick={onKnowMore}
-                className="border border-gray-200 text-brand-dark px-8 py-4 rounded-full font-bold hover:bg-gray-50 transition-colors"
+                className="w-full sm:w-auto border border-gray-200 text-brand-dark px-8 py-4 rounded-full font-bold hover:bg-gray-50 transition-all active:scale-95"
               >
                 Get to Know More
               </button>
