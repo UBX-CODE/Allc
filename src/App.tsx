@@ -503,29 +503,29 @@ const Services = ({ onBook }: { onBook: () => void }) => {
       title: 'Individual Consultation',
       desc: 'Expert guidance tailored to meet your unique metabolic and hormonal health needs.',
       icon: <UserIcon size={24} />,
-      color: 'bg-pink-500',
-      lightColor: 'bg-pink-50'
+      color: 'bg-brand-dark',
+      lightColor: 'bg-brand-dark/5'
     },
     {
       title: 'Long-Term Wellness',
       desc: 'Sustained evidence-based plans for long-term vitality and disease prevention.',
       icon: <Activity size={24} />,
-      color: 'bg-emerald-500',
-      lightColor: 'bg-emerald-50'
+      color: 'bg-brand-orange',
+      lightColor: 'bg-brand-orange/10'
     },
     {
       title: 'Couple Plans',
       desc: 'Synchronized wellness strategies perfectly balanced for partners and couples.',
       icon: <Heart size={24} />,
-      color: 'bg-blue-500',
-      lightColor: 'bg-blue-50'
+      color: 'bg-brand-dark',
+      lightColor: 'bg-brand-dark/5'
     },
     {
       title: 'Family Plans',
       desc: 'Comprehensive clinical care designed to enhance the lives of your entire family.',
       icon: <Home size={24} />,
-      color: 'bg-orange-500',
-      lightColor: 'bg-orange-50'
+      color: 'bg-brand-orange',
+      lightColor: 'bg-brand-orange/10'
     }
   ];
 
@@ -536,7 +536,7 @@ const Services = ({ onBook }: { onBook: () => void }) => {
           <h2 className="text-3xl md:text-5xl font-bold text-brand-dark mb-6">
             Our <span className="relative inline-block">
               Services
-              <span className="absolute inset-x-0 bottom-2 h-4 bg-pink-100 -z-10 rounded-lg"></span>
+              <span className="absolute inset-x-0 bottom-2 h-4 bg-brand-orange/10 -z-10 rounded-lg"></span>
             </span>
           </h2>
           <p className="text-gray-500 max-w-2xl mx-auto leading-relaxed">
@@ -565,7 +565,7 @@ const Services = ({ onBook }: { onBook: () => void }) => {
               <h3 className="text-2xl font-bold text-brand-dark mb-4 leading-tight">{service.title}</h3>
               <p className="text-gray-500 text-sm mb-8 leading-relaxed">{service.desc}</p>
               
-              <button className="flex items-center gap-2 text-sm font-bold text-pink-500 hover:gap-3 transition-all">
+              <button className="flex items-center gap-2 text-sm font-bold text-brand-orange hover:gap-3 transition-all">
                 Read more
                 <ArrowRight size={16} />
               </button>
@@ -577,7 +577,7 @@ const Services = ({ onBook }: { onBook: () => void }) => {
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           onClick={onBook}
-          className="bg-pink-500 text-white px-10 py-4 rounded-2xl font-bold flex items-center gap-3 mx-auto hover:bg-pink-600 transition-all shadow-lg shadow-pink-500/20"
+          className="bg-brand-orange text-white px-10 py-4 rounded-2xl font-bold flex items-center gap-3 mx-auto hover:bg-brand-dark transition-all shadow-lg shadow-brand-orange/20"
         >
           Hire Us Today
           <ArrowRight size={20} />

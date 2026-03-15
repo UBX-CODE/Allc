@@ -265,7 +265,7 @@ const Booking: React.FC<BookingProps> = ({ onBack }) => {
               </label>
               <input 
                 type="text" 
-                placeholder="John Smith" 
+                placeholder="Full Name" 
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className="w-full bg-gray-50 border border-gray-100 rounded-xl p-4 text-sm focus:ring-2 focus:ring-brand-orange focus:border-transparent outline-none transition-all"
