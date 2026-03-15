@@ -272,27 +272,17 @@ const Hero = ({ onBook, onViewServices }: { onBook: () => void, onViewServices: 
                </motion.div>
             </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.5, ease: "easeOut" }}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-brand-orange/10 rounded-full text-brand-orange text-[10px] lg:text-xs font-bold tracking-widest uppercase"
-            >
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-brand-orange/10 rounded-full text-brand-orange text-[10px] lg:text-xs font-bold tracking-widest uppercase">
               <span className="w-2 h-2 bg-brand-orange rounded-full animate-pulse"></span>
               Elegant mission to wellness
-            </motion.div>
+            </div>
 
             <div className="relative">
-              <motion.h1 
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.8, ease: "easeOut" }}
-                className="text-5xl sm:text-7xl lg:text-[84px] font-serif text-brand-dark leading-[1.1] lg:leading-[1] tracking-tight"
-              >
+              <h1 className="text-5xl sm:text-7xl lg:text-[84px] font-serif text-brand-dark leading-[1.1] lg:leading-[1] tracking-tight">
                 Transform your <br className="lg:hidden" />
                 <span className="italic font-normal text-brand-orange">health</span> <br />
                 with precision medicine
-              </motion.h1>
+              </h1>
               
               {/* Mobile Only Experience Badge */}
               <motion.div 
@@ -306,21 +296,11 @@ const Hero = ({ onBook, onViewServices }: { onBook: () => void, onViewServices: 
               </motion.div>
             </div>
 
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 1.5, ease: "easeOut" }}
-              className="text-base lg:text-lg text-gray-500 max-w-xl mx-auto leading-relaxed px-4 lg:px-0"
-            >
+            <p className="text-base lg:text-lg text-gray-500 max-w-xl mx-auto leading-relaxed px-4 lg:px-0">
               Personalised, Clinical, Evidence Based Wellness For Long Term Vitality. Join us on a journey to optimal health.
-            </motion.p>
+            </p>
 
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 1.0 }}
-              className="flex flex-col sm:flex-row items-center justify-center gap-4 px-6 lg:px-0"
-            >
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 px-6 lg:px-0">
               <motion.button 
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -337,28 +317,20 @@ const Hero = ({ onBook, onViewServices }: { onBook: () => void, onViewServices: 
                 className="w-full sm:w-auto bg-white text-brand-dark px-10 py-4 lg:py-4 rounded-full font-bold border border-brand-dark/10 hover:bg-gray-50 transition-all shadow-sm active:scale-95">
                 Explore Services
               </motion.button>
-            </motion.div>
+            </div>
           </div>
 
           {/* Right Column (Desktop Only) */}
           <div className="hidden lg:flex flex-col items-end gap-16">
-            <motion.div 
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              className="w-64 aspect-[4/5] rounded-[48px] overflow-hidden shadow-2xl rotate-3 border-8 border-white"
-            >
+            <div className="w-64 aspect-[4/5] rounded-[48px] overflow-hidden shadow-2xl rotate-3 border-8 border-white">
               <img 
                 src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=600" 
                 className="w-full h-full object-cover" 
                 alt="Exercise" 
               />
-            </motion.div>
+            </div>
 
-            <motion.div 
-              initial={{ x: 20, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              className="relative"
-            >
+            <div className="relative">
               <div className="w-32 h-32 bg-[#F4FF99] rounded-full flex flex-col items-center justify-center text-brand-dark shadow-xl border-4 border-white rotate-12">
                 <div className="absolute -top-2 -right-2 w-10 h-10 bg-brand-dark rounded-full flex items-center justify-center text-white">
                   <ArrowUpRight size={18} />
@@ -366,7 +338,7 @@ const Hero = ({ onBook, onViewServices }: { onBook: () => void, onViewServices: 
                 <span className="text-3xl font-bold">15+</span>
                 <span className="text-[10px] font-bold uppercase tracking-widest text-center px-4">Years of Experience</span>
               </div>
-            </motion.div>
+            </div>
           </div>
 
         </div>
@@ -384,13 +356,7 @@ const About = ({ onBook, onKnowMore }: { onBook: () => void, onKnowMore: () => v
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative">
         <div className="grid lg:grid-cols-2 gap-20 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
-            viewport={{ once: true }}
-            className="relative"
-          >
+          <div className="relative">
             <div className="relative py-12 lg:py-0">
               {/* Professional Background Elements - Mobile Only */}
               <div className="lg:hidden absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -424,26 +390,15 @@ const About = ({ onBook, onKnowMore }: { onBook: () => void, onKnowMore: () => v
               </div>
 
               {/* Mobile Expertise Badge */}
-              <motion.div 
-                initial={{ scale: 0, rotate: -20 }}
-                whileInView={{ scale: 1, rotate: -12 }}
-                viewport={{ once: true }}
-                className="lg:hidden absolute -top-4 left-6 w-20 h-20 bg-brand-dark rounded-full flex flex-col items-center justify-center text-white shadow-2xl border-4 border-white z-20"
-              >
+              <div className="lg:hidden absolute -top-4 left-6 w-20 h-20 bg-brand-dark rounded-full flex flex-col items-center justify-center text-white shadow-2xl border-4 border-white z-20">
                 <Stethoscope size={20} className="text-brand-orange mb-1" />
                 <span className="text-[8px] font-black uppercase tracking-tighter">Medical</span>
                 <span className="text-[8px] font-black uppercase tracking-tighter text-brand-orange">Expert</span>
-              </motion.div>
+              </div>
             </div>
 
             {/* Qualifications Card */}
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.3 }}
-              viewport={{ once: true }}
-              className="relative lg:absolute mt-8 lg:mt-0 lg:-bottom-10 lg:-right-10 bg-brand-orange text-white p-6 lg:p-8 rounded-[32px] shadow-xl w-[240px] lg:max-w-[280px] z-20 mx-auto lg:mx-0"
-            >
+            <div className="relative lg:absolute mt-8 lg:mt-0 lg:-bottom-10 lg:-right-10 bg-brand-orange text-white p-6 lg:p-8 rounded-[32px] shadow-xl w-[240px] lg:max-w-[280px] z-20 mx-auto lg:mx-0">
               <h4 className="font-bold text-base lg:text-lg mb-3 lg:mb-4">Qualifications</h4>
               <ul className="text-[10px] lg:text-[10px] space-y-1.5 lg:space-y-2 text-white/90 font-medium">
                 <li>• MBBS</li>
@@ -453,15 +408,10 @@ const About = ({ onBook, onKnowMore }: { onBook: () => void, onKnowMore: () => v
                 <li>• Cert. Exercise Science, INFS</li>
                 <li>• Cert. Pregnancy & Postpartum Nutrition, INFS</li>
               </ul>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="text-center lg:text-left"
-          >
+          <div className="text-center lg:text-left">
             <span className="text-brand-orange font-bold uppercase tracking-widest text-xs mb-4 block">About Dr. Divya Gautam</span>
             <h2 className="text-4xl md:text-5xl font-bold text-brand-dark mb-8 leading-tight">
               A Holistic Approach to <br />
@@ -492,7 +442,7 @@ const About = ({ onBook, onKnowMore }: { onBook: () => void, onKnowMore: () => v
                 Get to Know More
               </motion.button>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
@@ -557,29 +507,10 @@ const WhyChoose = () => {
             </motion.button>
           </motion.div>
 
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={{
-              hidden: { opacity: 0 },
-              visible: {
-                opacity: 1,
-                transition: {
-                  staggerChildren: 0.3,
-                  duration: 1.2
-                }
-              }
-            }}
-            className="grid sm:grid-cols-2 gap-6"
-          >
+          <div className="grid sm:grid-cols-2 gap-6">
             {points.map((point, i) => (
-              <motion.div 
+              <div 
                 key={i} 
-                variants={{
-                  hidden: { opacity: 0, scale: 0.9 },
-                  visible: { opacity: 1, scale: 1 }
-                }}
                 className="bg-white p-6 md:p-8 rounded-3xl md:rounded-[32px] shadow-sm border border-brand-dark/5 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group"
               >
                 <div className="w-12 h-12 bg-brand-orange/10 rounded-2xl flex items-center justify-center text-brand-orange mb-6 group-hover:bg-brand-orange group-hover:text-white transition-colors duration-300">
@@ -587,9 +518,9 @@ const WhyChoose = () => {
                 </div>
                 <h4 className="text-xl font-bold text-brand-dark mb-3 leading-tight">{point.title}</h4>
                 <p className="text-sm text-gray-500 leading-relaxed">{point.desc}</p>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
@@ -606,8 +537,6 @@ const AppointmentCTA = ({ onBook }: { onBook: () => void }) => {
           For Appointment <span className="italic font-light">Booking</span>
         </h2>
         <motion.button 
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={onBook}
@@ -671,43 +600,19 @@ const Services = ({ onBook }: { onBook: () => void }) => {
           </p>
         </div>
 
-        <motion.div 
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={{
-            hidden: { opacity: 0 },
-            visible: {
-              opacity: 1,
-              transition: {
-                staggerChildren: 0.3,
-                duration: 1.2
-              }
-            }
-          }}
-          className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20 px-4 md:px-0"
-        >
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20 px-4 md:px-0">
           {services.map((service, i) => (
-            <motion.div 
-              key={i}
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0 }
-              }}
-              className="bg-white p-10 rounded-[40px] shadow-sm border border-brand-dark/5 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group flex flex-col items-center text-center"
-            >
+            <div key={i} className="bg-white p-10 rounded-[40px] shadow-sm border border-brand-dark/5 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group flex flex-col items-center text-center">
               <div className={`w-14 h-14 ${service.color} text-white rounded-2xl flex items-center justify-center mb-8 shadow-lg group-hover:scale-110 transition-transform duration-500`}>
                 {service.icon}
               </div>
               <h3 className="text-2xl font-bold text-brand-dark mb-4 leading-tight">{service.title}</h3>
               <p className="text-gray-500 text-sm leading-relaxed">{service.desc}</p>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
 
         <motion.button 
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={onBook}
@@ -756,36 +661,21 @@ const Pricing = ({ onBook }: { onBook: () => void }) => {
     <section id="pricing" className="py-24 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="text-center mb-20">
-          <motion.span 
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-brand-orange font-bold uppercase tracking-widest text-xs mb-4 block"
-          >
+          <span className="text-brand-orange font-bold uppercase tracking-widest text-xs mb-4 block">
             Investment in Longevity
-          </motion.span>
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-3xl md:text-5xl font-bold text-brand-dark mb-6"
-          >
+          </span>
+          <h2 className="text-3xl md:text-5xl font-bold text-brand-dark mb-6">
             Our <span className="italic font-light">Pricing</span> Plans
-          </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-gray-500 max-w-2xl mx-auto leading-relaxed"
-          >
+          </h2>
+          <p className="text-gray-500 max-w-2xl mx-auto leading-relaxed">
             Choose a plan that best fits your journey towards optimal health and sustainable longevity.
-          </motion.p>
+          </p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 mb-12">
           {pricingCategories.map((cat, idx) => (
-            <motion.div 
+            <div 
               key={idx}
-              initial={{ opacity: 0, x: idx % 2 === 0 ? -20 : 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
               className="bg-brand-bg rounded-3xl md:rounded-[40px] p-6 md:p-10 border border-brand-dark/5 flex flex-col"
             >
               <div className="flex items-center gap-4 mb-8">
@@ -826,19 +716,14 @@ const Pricing = ({ onBook }: { onBook: () => void }) => {
                 Book Consultation
                 <ArrowUpRight size={18} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </motion.button>
-            </motion.div>
+            </div>
           ))}
         </div>
 
         {/* Long-Term & Couple Plans */}
         <div className="grid lg:grid-cols-2 gap-8 mb-12">
           {/* Long Term Wellness */}
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
-            className="bg-brand-dark rounded-[40px] p-10 text-white"
-          >
+          <div className="bg-brand-dark rounded-[40px] p-10 text-white">
             <div className="flex items-center gap-4 mb-8">
               <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center text-brand-orange">
                 <Activity size={24} />
@@ -870,15 +755,10 @@ const Pricing = ({ onBook }: { onBook: () => void }) => {
             >
               Get Started
             </motion.button>
-          </motion.div>
+          </div>
 
           {/* Couple Consultation */}
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
-            className="bg-brand-bg rounded-[40px] p-10 border border-brand-dark/5"
-          >
+          <div className="bg-brand-bg rounded-[40px] p-10 border border-brand-dark/5">
             <div className="flex items-center gap-4 mb-8">
               <div className="w-12 h-12 bg-brand-orange/10 rounded-2xl flex items-center justify-center text-brand-orange">
                 <Heart size={24} />
@@ -905,7 +785,7 @@ const Pricing = ({ onBook }: { onBook: () => void }) => {
             >
               Book Couple Plan
             </motion.button>
-          </motion.div>
+          </div>
         </div>
 
         {/* Specialized Programs */}
@@ -930,11 +810,8 @@ const Pricing = ({ onBook }: { onBook: () => void }) => {
               desc: "Learn the art of healthy cooking for sustainable longevity."
             }
           ].map((item, idx) => (
-            <motion.div 
+            <div 
               key={idx}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ delay: idx * 0.3, duration: 1.2, ease: "easeOut" }}
               className="bg-white p-8 rounded-[32px] border border-brand-dark/5 shadow-sm hover:shadow-md transition-all text-center"
             >
               <div className="w-12 h-12 bg-brand-bg rounded-2xl flex items-center justify-center text-brand-dark mx-auto mb-6">
@@ -943,16 +820,12 @@ const Pricing = ({ onBook }: { onBook: () => void }) => {
               <h4 className="font-bold text-brand-dark mb-2">{item.title}</h4>
               <p className="text-xs text-gray-400 mb-4 leading-relaxed">{item.desc}</p>
               <div className="text-brand-orange font-bold">{item.price}</div>
-            </motion.div>
+            </div>
           ))}
         </div>
 
         {/* Important Notes */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          className="bg-brand-bg rounded-[40px] p-12 border border-brand-dark/5"
-        >
+        <div className="bg-brand-bg rounded-[40px] p-12 border border-brand-dark/5">
           <div className="flex items-center gap-3 mb-8">
             <Tag size={20} className="text-brand-orange" />
             <h3 className="text-xl font-bold text-brand-dark">Important Notes</h3>
@@ -972,7 +845,7 @@ const Pricing = ({ onBook }: { onBook: () => void }) => {
               </div>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -984,13 +857,7 @@ const TestimonialCard: React.FC<{ item: any }> = ({ item }) => {
   const isLong = item.text.length > maxLength;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 1.2, ease: "easeOut" }}
-      viewport={{ once: true }}
-      className="bg-white p-6 md:p-8 rounded-3xl md:rounded-[32px] text-left shadow-sm border border-gray-100 flex flex-col h-full"
-    >
+    <div className="bg-white p-6 md:p-8 rounded-3xl md:rounded-[32px] text-left shadow-sm border border-gray-100 flex flex-col h-full">
       <div className="flex items-center gap-4 mb-6">
         <div>
           <h4 className="font-bold text-brand-dark">{item.name}</h4>
@@ -1015,7 +882,7 @@ const TestimonialCard: React.FC<{ item: any }> = ({ item }) => {
         )}
       </div>
       <span className="text-gray-400 text-sm">{item.role}</span>
-    </motion.div>
+    </div>
   );
 };
 
@@ -1046,34 +913,15 @@ const Testimonials = () => {
       <div className="absolute top-1/2 left-0 w-[30%] h-[30%] bg-brand-orange/5 blur-[100px] rounded-full -translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
       
       <div className="max-w-7xl mx-auto px-6 lg:px-12 text-center relative z-10">
-        <motion.h2 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-4xl md:text-6xl font-bold text-brand-dark mb-16"
-        >
+        <h2 className="text-4xl md:text-6xl font-bold text-brand-dark mb-16">
           Success Stories
-        </motion.h2>
+        </h2>
         
-        <motion.div 
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={{
-            hidden: { opacity: 0 },
-            visible: {
-              opacity: 1,
-              transition: {
-                staggerChildren: 0.15
-              }
-            }
-          }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6"
-        >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {testimonials.map((item, index) => (
             <TestimonialCard key={index} item={item} />
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -1114,28 +962,10 @@ const FAQ = () => {
           </motion.button>
         </motion.div>
 
-        <motion.div 
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={{
-            hidden: { opacity: 0 },
-            visible: {
-              opacity: 1,
-              transition: {
-                staggerChildren: 0.1
-              }
-            }
-          }}
-          className="space-y-4"
-        >
+        <div className="space-y-4">
           {faqs.map((faq, i) => (
-            <motion.div 
+            <div 
               key={i} 
-              variants={{
-                hidden: { opacity: 0, y: 10 },
-                visible: { opacity: 1, y: 0 }
-              }}
               className="border-b border-gray-200"
             >
               <button 
@@ -1165,9 +995,9 @@ const FAQ = () => {
                   </motion.div>
                 )}
               </AnimatePresence>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -1269,14 +1099,19 @@ export default function App() {
   };
 
   const pageVariants = {
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: -20 },
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    exit: { opacity: 0 },
   };
 
   const pageTransition = {
-    duration: 1.2,
-    ease: [0.43, 0.13, 0.23, 0.96] // Custom cubic-bezier for smooth motion
+    duration: 0.3,
+    ease: "easeOut"
+  };
+
+  const fastTransition = {
+    duration: 0.15,
+    ease: "linear"
   };
 
   return (
@@ -1309,7 +1144,7 @@ export default function App() {
             animate="animate"
             exit="exit"
             variants={pageVariants}
-            transition={pageTransition}
+            transition={fastTransition}
           >
             <Booking onBack={() => setShowBooking(false)} />
             <Footer />

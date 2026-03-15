@@ -85,8 +85,6 @@ const Dashboard: React.FC<DashboardProps> = ({ onBack }) => {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>
             <motion.button 
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
               whileHover={{ x: -5 }}
               onClick={onBack}
               className="mb-6 flex items-center gap-2 text-brand-dark/40 hover:text-brand-dark transition-colors text-sm font-bold"
@@ -147,12 +145,8 @@ const Dashboard: React.FC<DashboardProps> = ({ onBack }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <AnimatePresence mode="popLayout">
               {appointments.map((apt, i) => (
-                <motion.div
+                <div
                   key={apt.id}
-                  layout
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.2, duration: 1.0 }}
                   className="bg-white rounded-[32px] p-8 border border-brand-dark/5 shadow-sm hover:shadow-xl hover:shadow-brand-dark/5 transition-all group"
                 >
                   <div className="flex justify-between items-start mb-6">
@@ -196,7 +190,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onBack }) => {
                       <ArrowRight size={18} />
                     </motion.button>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </AnimatePresence>
           </div>

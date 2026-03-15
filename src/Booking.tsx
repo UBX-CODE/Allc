@@ -126,8 +126,6 @@ const Booking: React.FC<BookingProps> = ({ onBack }) => {
         <div className="lg:w-1/3 bg-brand-dark p-12 text-white flex flex-col justify-between relative overflow-hidden">
           <div className="relative z-10">
             <motion.button 
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
               whileHover={{ x: -5 }}
               onClick={onBack}
               className="mb-12 flex items-center gap-2 text-white/60 hover:text-white transition-colors text-sm font-bold"
@@ -180,9 +178,6 @@ const Booking: React.FC<BookingProps> = ({ onBack }) => {
               {services.map((s, idx) => (
                 <motion.button
                   key={s.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 + (idx * 0.2), duration: 1.0 }}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => setSelectedService(s)}

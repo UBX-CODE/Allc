@@ -41,12 +41,7 @@ const DoctorProfile: React.FC<DoctorProfileProps> = ({ onBack, onBook, onViewSer
         <div className="grid lg:grid-cols-[1fr_1.5fr] gap-20 items-start">
           {/* Left Column: Image & Quick Info */}
           <div className="space-y-12">
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              className="relative"
-            >
+            <div className="relative">
               <div className="aspect-square md:aspect-[4/5] rounded-full md:rounded-[48px] overflow-hidden shadow-2xl border-4 md:border-8 border-white w-56 h-56 md:w-[480px] md:h-auto mx-auto">
                 <img 
                   src={docImg} 
@@ -59,7 +54,7 @@ const DoctorProfile: React.FC<DoctorProfileProps> = ({ onBack, onBook, onViewSer
                 <div className="text-2xl md:text-3xl font-bold text-center md:text-left">15+</div>
                 <div className="text-[8px] md:text-[10px] font-bold uppercase tracking-widest text-center md:text-left">Years Experience</div>
               </div>
-            </motion.div>
+            </div>
 
             <div className="space-y-6">
               <h1 className="text-4xl font-bold text-brand-dark leading-tight">
@@ -72,12 +67,7 @@ const DoctorProfile: React.FC<DoctorProfileProps> = ({ onBack, onBook, onViewSer
                   </span>
                 ))}
               </div>
-              <motion.div 
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="flex flex-col sm:flex-row gap-4 pt-4"
-              >
+              <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <motion.button 
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -95,16 +85,11 @@ const DoctorProfile: React.FC<DoctorProfileProps> = ({ onBack, onBook, onViewSer
                 >
                   View Services
                 </motion.button>
-              </motion.div>
+              </div>
             </div>
 
             {/* Qualifications Card */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="bg-white p-8 rounded-[40px] border border-brand-dark/5 shadow-sm"
-            >
+            <div className="bg-white p-8 rounded-[40px] border border-brand-dark/5 shadow-sm">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 bg-brand-orange/10 rounded-xl flex items-center justify-center text-brand-orange">
                   <GraduationCap size={20} />
@@ -120,29 +105,22 @@ const DoctorProfile: React.FC<DoctorProfileProps> = ({ onBack, onBook, onViewSer
                   "Board Certified Lifestyle Medicine Professional (IBLM)",
                   "FOGSI Member"
                 ].map((item, i) => (
-                  <motion.li 
+                  <li 
                     key={i}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.5 + (i * 0.2), duration: 1.0 }}
                     className="flex gap-3 text-sm text-gray-500 leading-relaxed items-start"
                   >
                     <div className="w-1.5 h-1.5 bg-brand-orange rounded-full mt-1.5 shrink-0" />
                     {item}
-                  </motion.li>
+                  </li>
                 ))}
               </ul>
-            </motion.div>
+            </div>
           </div>
 
           {/* Right Column: Detailed Content */}
           <div className="space-y-16">
             {/* About Section */}
-            <motion.section 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="space-y-6"
-            >
+            <section className="space-y-6">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-brand-orange/10 rounded-xl flex items-center justify-center text-brand-orange">
                   <BookOpen size={20} />
@@ -157,15 +135,9 @@ const DoctorProfile: React.FC<DoctorProfileProps> = ({ onBack, onBook, onViewSer
                   She follows an evidence-based, systematic, and scientific approach to the curative and preventive aspects of lifestyle diseases. She has been supporting and guiding people in reversing lifestyle diseases, optimizing metabolic and hormonal wellness, and embracing healthy habits that safeguard their future.
                 </p>
               </div>
-            </motion.section>
+            </section>
 
-            {/* Experience Section */}
-            <motion.section 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="space-y-6"
-            >
+            <section className="space-y-6">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-brand-orange/10 rounded-xl flex items-center justify-center text-brand-orange">
                   <Briefcase size={20} />
@@ -183,15 +155,9 @@ const DoctorProfile: React.FC<DoctorProfileProps> = ({ onBack, onBook, onViewSer
                   At ALLC, Dr. Divya combines compassionate care with structured lifestyle programs, guiding clients toward realistic, personalized, and lasting health transformations.
                 </p>
               </div>
-            </motion.section>
+            </section>
 
-            {/* Philosophy Section */}
-            <motion.section 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="space-y-6"
-            >
+            <section className="space-y-6">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-brand-orange/10 rounded-xl flex items-center justify-center text-brand-orange">
                   <Target size={20} />
@@ -201,15 +167,9 @@ const DoctorProfile: React.FC<DoctorProfileProps> = ({ onBack, onBook, onViewSer
               <p className="text-gray-500 text-lg leading-relaxed italic border-l-4 border-brand-orange pl-6">
                 "To Dr. Divya, healthcare does not simply involve prolonging life, but it involves improving the quality of life — Not only treating medically but also providing a holistic approach so that people can take charge and empower themselves with skills for a long, healthy, and blissful life."
               </p>
-            </motion.section>
+            </section>
 
-            {/* Values Section */}
-            <motion.section 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="space-y-8"
-            >
+            <section className="space-y-8">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-brand-orange/10 rounded-xl flex items-center justify-center text-brand-orange">
                   <ShieldCheck size={20} />
@@ -231,7 +191,7 @@ const DoctorProfile: React.FC<DoctorProfileProps> = ({ onBack, onBook, onViewSer
                   </div>
                 ))}
               </div>
-            </motion.section>
+            </section>
           </div>
         </div>
       </div>
