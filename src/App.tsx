@@ -35,7 +35,7 @@ import {
   LogOut,
   ShieldCheck
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 import Booking from './Booking';
 import DoctorProfile from './DoctorProfile';
 import Dashboard from './Dashboard';
@@ -608,16 +608,25 @@ const WhyChoose = () => {
 
           <div className="grid sm:grid-cols-2 gap-6">
             {points.map((point, i) => (
-              <div
+              <motion.div
                 key={i}
-                className="bg-white p-6 md:p-8 rounded-3xl md:rounded-[32px] shadow-sm border border-brand-dark/5 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                whileHover={{ 
+                  y: -8, 
+                  boxShadow: "0 20px 40px -15px rgba(0,0,0,0.1)",
+                  transition: { duration: 0.3 } 
+                }}
+                className="bg-white p-6 md:p-8 rounded-3xl md:rounded-[32px] shadow-sm border border-brand-dark/5 transition-all duration-300 group"
               >
-                <div className="w-12 h-12 bg-brand-orange/10 rounded-2xl flex items-center justify-center text-brand-orange mb-6 group-hover:bg-brand-orange group-hover:text-white transition-colors duration-300">
+                <div className="w-12 h-12 bg-brand-orange/10 rounded-2xl flex items-center justify-center text-brand-orange mb-6 group-hover:bg-brand-orange group-hover:text-white group-hover:rotate-6 transition-all duration-300">
                   {point.icon}
                 </div>
-                <h4 className="text-xl font-bold text-brand-dark mb-3 leading-tight">{point.title}</h4>
+                <h4 className="text-xl font-bold text-brand-dark mb-3 leading-tight group-hover:text-brand-orange transition-colors duration-300">{point.title}</h4>
                 <p className="text-sm text-gray-500 leading-relaxed">{point.desc}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -654,72 +663,116 @@ const AppointmentCTA = ({ onBook }: { onBook: () => void }) => {
 const Services = ({ onBook }: { onBook: () => void }) => {
   const services = [
     {
-      title: 'Individual Consultation',
-      desc: 'Expert guidance tailored to meet your unique metabolic and hormonal health needs.',
-      icon: <UserIcon size={24} />,
-      color: 'bg-brand-dark',
-      lightColor: 'bg-brand-dark/5'
+      title: 'Precision Medicine',
+      desc: 'Cellular mapping for longevity.',
+      icon: <ShieldCheck size={20} />,
     },
     {
-      title: 'Long-Term Wellness',
-      desc: 'Sustained evidence-based plans for long-term vitality and disease prevention.',
-      icon: <Activity size={24} />,
-      color: 'bg-brand-orange',
-      lightColor: 'bg-brand-orange/10'
+      title: 'Hormonal Wellness',
+      desc: 'Peak endocrine optimization.',
+      icon: <Activity size={20} />,
     },
     {
-      title: 'Couple Plans',
-      desc: 'Synchronized wellness strategies perfectly balanced for partners and couples.',
-      icon: <Heart size={24} />,
-      color: 'bg-brand-dark',
-      lightColor: 'bg-brand-dark/5'
+      title: 'Partner Protocol',
+      desc: 'Synchronized health for couples.',
+      icon: <Users size={20} />,
     },
     {
-      title: 'Family Plans',
-      desc: 'Comprehensive clinical care designed to enhance the lives of your entire family.',
-      icon: <Home size={24} />,
-      color: 'bg-brand-orange',
-      lightColor: 'bg-brand-orange/10'
+      title: 'Family Longevity',
+      desc: 'Multi-generational clinical care.',
+      icon: <Heart size={20} />,
+    },
+    {
+      title: 'Concierge Care',
+      desc: 'Private medical management.',
+      icon: <Stethoscope size={20} />,
+    },
+    {
+      title: 'Nutritional Intake',
+      desc: 'Evidence-based food protocols.',
+      icon: <Users size={20} />,
     }
   ];
 
   return (
-    <section id="services" className="py-24 bg-brand-bg">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 text-center">
-        <div className="mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold text-brand-dark mb-6">
-            Our <span className="relative inline-block">
-              Services
-              <span className="absolute inset-x-0 bottom-2 h-4 bg-brand-orange/10 -z-10 rounded-lg"></span>
-            </span>
-          </h2>
-          <p className="text-gray-500 max-w-2xl mx-auto leading-relaxed">
-            Our mission is to drive progress and enhance the lives of our patients by delivering
-            superior clinical services that exceed expectations.
-          </p>
+    <section id="services" className="py-12 lg:py-20 bg-brand-dark relative overflow-hidden">
+      {/* Subtle Background Elements */}
+      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-emerald-500/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-emerald-500/5 blur-[120px] rounded-full pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 lg:px-12 relative z-10">
+        <div className="flex flex-col lg:flex-row justify-between items-end mb-10 lg:mb-16 gap-6">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="max-w-2xl"
+          >
+            <span className="text-emerald-400 font-bold uppercase tracking-[0.3em] text-[10px] mb-3 block">Programs</span>
+            <h2 className="text-4xl lg:text-6xl font-bold text-white font-serif leading-none tracking-tight">
+              Clinical <span className="italic font-normal text-emerald-400">Excellence.</span>
+            </h2>
+          </motion.div>
+          <motion.p 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-white/40 text-xs lg:text-base max-w-[240px] leading-relaxed"
+          >
+            Optimized health architecture for long-term clinical vitality.
+          </motion.p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20 px-4 md:px-0">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4">
           {services.map((service, i) => (
-            <div key={i} className="bg-white p-10 rounded-[40px] shadow-sm border border-brand-dark/5 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group flex flex-col items-center text-center">
-              <div className={`w-14 h-14 ${service.color} text-white rounded-2xl flex items-center justify-center mb-8 shadow-lg group-hover:scale-110 transition-transform duration-500`}>
-                {service.icon}
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.05 }}
+              whileHover={{ y: -4, backgroundColor: 'rgba(255,255,255,0.06)' }}
+              className="group relative p-4 lg:p-8 rounded-[24px] lg:rounded-[40px] overflow-hidden bg-white/[0.03] border border-white/5 transition-all duration-300"
+            >
+              <div className="flex flex-col gap-3 lg:gap-6">
+                <div className="w-8 h-8 lg:w-12 lg:h-12 rounded-xl lg:rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center border border-emerald-500/10 transition-colors group-hover:bg-emerald-500 group-hover:text-white">
+                  {service.icon}
+                </div>
+                
+                <div>
+                  <h3 className="text-sm lg:text-xl font-bold text-white mb-1 lg:mb-2 tracking-tight">
+                    {service.title}
+                  </h3>
+                  <p className="text-[10px] lg:text-sm text-white/40 group-hover:text-white/60 leading-tight lg:leading-relaxed">
+                    {service.desc}
+                  </p>
+                </div>
               </div>
-              <h3 className="text-2xl font-bold text-brand-dark mb-4 leading-tight">{service.title}</h3>
-              <p className="text-gray-500 text-sm leading-relaxed">{service.desc}</p>
-            </div>
+
+              {/* Subtle hover indicator */}
+              <div className="absolute bottom-6 right-8 opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0">
+                <ArrowUpRight size={14} className="text-emerald-400" />
+              </div>
+            </motion.div>
           ))}
         </div>
 
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={onBook}
-          className="bg-brand-orange text-white px-10 py-4 rounded-2xl font-bold flex items-center gap-3 mx-auto transition-all shadow-lg shadow-brand-orange/20"
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mt-12 lg:mt-16 flex flex-col items-center"
         >
-          Hire Us Today
-          <ArrowRight size={20} />
-        </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={onBook}
+            className="w-full lg:w-auto bg-emerald-600 text-white px-8 lg:px-12 py-4 lg:py-5 rounded-[20px] lg:rounded-[24px] font-bold text-sm lg:text-lg flex items-center justify-center gap-3 shadow-xl transition-all hover:bg-emerald-500"
+          >
+            <span>Initiate Consultation</span>
+            <ArrowUpRight size={18} />
+          </motion.button>
+        </motion.div>
       </div>
     </section>
   );
