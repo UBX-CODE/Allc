@@ -1,12 +1,3 @@
-<div align="center">
-  <img src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" alt="ALLC Banner" width="100%" />
-  
-  <br />
-  <br />
-  
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=24&pause=1000&color=3B82F6&center=true&vCenter=true&width=800&lines=ALLC+–+Smart+Doctor+Appointment+Booking;Book+Appointments.+Pay+Securely.+Get+Care+Faster;Built+with+React,+Node.js+%26+Firebase" alt="Typing SVG" />
-
-  <br />
 
   <p>
     <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" />
@@ -63,15 +54,6 @@ This smart doctor appointment booking platform is built with a focus on modern d
 └── 📄 README.md               # You are here!
 ```
 
----
-
-## 📈 Activity & Stats
-
-<div align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=github&bg_color=0D1117&color=58A6FF&line=58A6FF&point=FFFFFF&area=true&hide_border=true" alt="Activity Graph" />
-</div>
-
----
 
 ## ⚙️ Getting Started (Local Setup)
 
